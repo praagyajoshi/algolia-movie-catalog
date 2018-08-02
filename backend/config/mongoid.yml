@@ -45,7 +45,7 @@ development:
 
         # The database or source to authenticate the user against.
         # (default: the database specified above or admin)
-        # auth_source: admin
+        auth_source: admin
 
         # Force a the driver cluster to behave in a certain manner instead of auto-
         # discovering. Can be one of: :direct, :replica_set, :sharded. Set to :direct
@@ -157,8 +157,13 @@ test:
     default:
       database: backend_test
       hosts:
-        - localhost:27017
+        - mongo:27017
       options:
         read:
           mode: :primary
         max_pool_size: 1
+        user: 'root'
+        password: 'algolia'
+        roles:
+          - 'dbOwner'
+        auth_source: admin
