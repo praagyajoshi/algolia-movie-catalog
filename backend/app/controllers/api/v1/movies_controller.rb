@@ -30,7 +30,8 @@ module Api::V1
         :title,
         { alternative_title: [] },
         { actors: [] },
-        :year
+        :year,
+        :image
       )
     end
 
