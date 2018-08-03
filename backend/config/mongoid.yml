@@ -35,7 +35,7 @@ development:
 
         # The user's database roles.
         roles:
-          - 'dbOwner'
+          - 'root'
 
         # Change the default authentication mechanism. Valid options are: :scram,
         # :mongodb_cr, :mongodb_x509, and :plain. Note that all authentication
@@ -107,7 +107,7 @@ development:
 
 
   # Configure Mongoid specific options. (optional)
-  options:
+  # options:
     # Includes the root model name in json serialization. (default: false)
     # include_root_in_json: false
 
@@ -164,6 +164,6 @@ test:
         max_pool_size: 1
         user: 'root'
         password: 'algolia'
-        roles:
-          - 'dbOwner'
         auth_source: admin
+        roles:
+          - 'root'

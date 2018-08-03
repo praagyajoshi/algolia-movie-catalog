@@ -6,10 +6,10 @@ if [ -f ./tmp/pids/server.pid ]; then
   rm tmp/pids/server.pid
 fi
 
-# Install dependencies
+# Validate dependencies
 echo -e "\nChecking gems"
 bundle install
 
-# Run!
+# Execute the commands specified along with this entry point
 echo -e "\nRunning server"
 exec "$@"
