@@ -1,6 +1,7 @@
 module Api::V1
   class MoviesController < ApiController
     before_action :set_movie, only: [:destroy]
+    after_action :index_movies, only: [:create, :destroy]
 
     # GET /movies
     def index
@@ -25,11 +26,21 @@ module Api::V1
     def movie_params
       # Whitelist params
       # TODO: add other params as well
-      params.permit(:title, :year)
+      params.permit(
+        :title,
+        :alternative_title,
+        :actors,
+        :year
+      )
     end
 
     def set_movie
       @movie = Movie.find(params[:id])
+    end
+
+    # Tells Algolia to reindex all the movies we have in store
+    def index_movies
+      Movie.reindex
     end
   end
 end

@@ -9,6 +9,8 @@ gem 'rails', '~> 5.2.0'
 gem 'puma', '~> 3.11'
 # Use MongoDB
 gem 'mongoid', '~> 7.0'
+# Use Algolia search
+gem 'algoliasearch-rails'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
