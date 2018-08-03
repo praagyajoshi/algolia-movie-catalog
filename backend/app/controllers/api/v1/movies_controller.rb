@@ -28,8 +28,8 @@ module Api::V1
       # TODO: add other params as well
       params.permit(
         :title,
-        :alternative_title,
-        :actors,
+        { alternative_title: [] },
+        { actors: [] },
         :year
       )
     end
