@@ -34,8 +34,8 @@ development:
         password: 'algolia'
 
         # The user's database roles.
-        roles:
-          - 'root'
+        # roles:
+        #   - 'root'
 
         # Change the default authentication mechanism. Valid options are: :scram,
         # :mongodb_cr, :mongodb_x509, and :plain. Note that all authentication
@@ -165,5 +165,5 @@ test:
         user: 'root'
         password: 'algolia'
         auth_source: admin
-        roles:
-          - 'root'
+        # roles:
+        #   - 'root'

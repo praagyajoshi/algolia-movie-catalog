@@ -14,6 +14,7 @@ pickle-email-*.html
 
 # Don't add public uploads to source control
 public/api/uploads/
+public/uploads/
 
 # TODO Comment out this rule if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
