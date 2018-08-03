@@ -34,7 +34,7 @@ class Movie
 
     # Making actors attribute unordered because it doesn't matter
     # which actor was matched
-    searchableAttributes ['title', 'alternative_titles', 'unordered(actors)', 'year']
+    searchableAttributes ['title', 'alternative_titles', 'actors', 'year']
 
     # Ranking search results based on score
     customRanking ['desc(score)']

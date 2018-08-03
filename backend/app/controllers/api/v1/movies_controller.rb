@@ -4,7 +4,7 @@ module Api::V1
 
     # GET /movies
     def index
-      @movies = Movie.all
+      @movies = Movie.page(params[:page]).per(20)
       json_response(@movies)
     end
 
@@ -30,7 +30,7 @@ module Api::V1
         { alternative_titles: [] },
         { actors: [] },
         :year,
-        :image
+        :uploaded_image
       )
     end
 

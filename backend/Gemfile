@@ -13,6 +13,8 @@ gem 'mongoid', '~> 7.0'
 gem 'algoliasearch-rails'
 # Use Carrierwave for image upload
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+# Use kaminari for pagination
+gem 'kaminari-mongoid'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 # gem 'jbuilder', '~> 2.5'
