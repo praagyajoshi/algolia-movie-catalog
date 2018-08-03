@@ -8,6 +8,7 @@ class Movie
   field :title, type: String
   field :alternative_titles, type: Array
   field :year, type: Integer
+  field :image, type: String
   field :color, type: String
   field :score, type: Float
   field :rating, type: Integer
@@ -19,7 +20,7 @@ class Movie
   validates_presence_of :title, :year
 
   # Image uploader
-  mount_uploader :image, ImageUploader
+  mount_uploader :uploaded_image, ImageUploader
 
   # Search specific configurations
   algoliasearch do
@@ -27,8 +28,8 @@ class Movie
     # attribute :title, :alternative_titles, :year, :score, :rating, :actors, :genre
 
     # send complete URL for the image
-    add_attribute :image do
-      self.image.url
+    add_attribute :uploaded_image do
+      self.uploaded_image.url
     end
 
     # Making actors attribute unordered because it doesn't matter
