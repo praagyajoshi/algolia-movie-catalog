@@ -12,4 +12,4 @@ ENV PATH ./node_modules/.bin:$PATH
 # Install and cache app dependencies
 COPY package.json package-lock.json ./
 RUN npm install
-RUN npm install react-scripts@1.1.1 -g
+RUN npm install react-scripts@1.1.4 -g

@@ -50,7 +50,7 @@ services:
 
   frontend:
     build: ./frontend
-    command: npm start
+    command: npm run start
     volumes:
       - ./frontend:/app
       - /app/node_modules
