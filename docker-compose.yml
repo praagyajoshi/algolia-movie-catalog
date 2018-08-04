@@ -52,8 +52,9 @@ services:
     build: ./frontend
     command: npm run start
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - ./frontend/src:/app/src
+      - ./frontend/public:/app/public
+      - ./frontend/config-overrides.js:/app/config-overrides.js
     environment:
       NODE_ENV: development
     container_name: praagya-algolia-frontend
