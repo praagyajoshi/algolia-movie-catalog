@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 
 class Header extends Component {
   render() {
     return (
-      <section className="hero is-medium is-bold is-danger">
+      <section className="hero is-medium is-bold is-link">
         <div className="hero-head">
 
           <nav className="navbar">
             <div className="container">
               <div className="navbar-brand">
-                <a href="#" className="navbar-item">
+                <a href="/" className="navbar-item">
                   <h3 className="title is-3">
                     Movie Laundry
                   </h3>

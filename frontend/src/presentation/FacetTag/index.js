@@ -5,20 +5,23 @@ import './style.css';
 
 class FacetTag extends Component {
   render() {
+    let postfix = this.props.isRating ? ' and above' : '';
+
     return (
-      <div className="facet-tag control">
-        <div className="tags has-addons">
-          <a className="tag is-link">{this.props.name}</a>
-          <a className="tag is-count">{this.props.count}</a>
+      <a className="facet-value-link">
+        <div className="facet-tag">
+          <div className="is-name">{this.props.name + postfix}</div>
+          <div className="is-count">{this.props.count}</div>
         </div>
-      </div>
+      </a>
     );
   }
 }
 
 FacetTag.propTypes = {
   name: PropTypes.string.isRequired,
-  count: PropTypes.number.isRequired
+  count: PropTypes.number.isRequired,
+  isRating: PropTypes.bool.isRequired
 }
 
 export default FacetTag;

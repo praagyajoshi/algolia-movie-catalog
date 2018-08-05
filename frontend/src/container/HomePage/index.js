@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import SearchBox from '../../presentation/SearchBox';
 import AddMovieButton from '../../presentation/AddMovieButton';
 import Header from '../../presentation/Header';
+import TwoColumnLayout from '../../presentation/TwoColumnLayout';
 
 import Facets from '../Facets';
 import MovieResults from '../MovieResults';
@@ -106,33 +107,25 @@ class HomePage extends Component {
               onClickCallback={() => this.showAddMovieModal()} />
           </Header>
 
-          <section className="section">
-            <div className="container home-container">
-              <div className="columns">
-                <div className="column is-one-quarter">
-                  <Facets
-                    facets={this.state.facets} />
-                </div>
-                <div className="column is-three-quarters">
-                  <SearchBox
-                    valueChangeCallback={(value) => this.searchValueUpdated(value)} />
-
-                  <MovieResults
-                    counters={{
-                      resultsCount: this.state.resultsCount,
-                      pageNumber: this.state.pageNumber,
-                      hitsPerPage: this.state.hitsPerPage,
-                    }}
-                    movies={this.state.movies}
-                    deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
-                </div>
+          <TwoColumnLayout
+            left={
+              <Facets
+                facets={this.state.facets} />
+            }
+            right={
+              <div>
+                <SearchBox
+                  valueChangeCallback={(value) => this.searchValueUpdated(value)} />
+                <MovieResults
+                  counters={{
+                    resultsCount: this.state.resultsCount,
+                    pageNumber: this.state.pageNumber,
+                    hitsPerPage: this.state.hitsPerPage,
+                  }}
+                  movies={this.state.movies}
+                  deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
               </div>
-            </div>
-          </section>
-
-
-          <section className="section">
-          </section>
+            } />
         </div>
 
         <AddMovieModal

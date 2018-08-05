@@ -16,11 +16,14 @@ class FacetTagGroup extends Component {
     for (var key in facetValues) {
       if (facetValues.hasOwnProperty(key)) {
         const tagElementKey = key + ':' + facetValues[key];
+        // TODO: sort alphabetically for rating
+        // TODO: sort by count for genre
         renderArray.push(
           <FacetTag
             key={tagElementKey}
             count={facetValues[key]}
-            name={key} />
+            name={key}
+            isRating={this.props.groupName.toLowerCase() === 'rating'} />
         );
       }
     }
@@ -37,9 +40,9 @@ class FacetTagGroup extends Component {
       <div className="field">
         <label className="label">{capitalizedGroupName}</label>
         <div className="control">
-          <div className="field is-grouped is-grouped-multiline">
+          {/* <div className="field is-grouped is-grouped-multiline"> */}
             {this.getTags()}
-          </div>
+          {/* </div> */}
         </div>
       </div>
     );
