@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
 
 import SearchBox from '../../presentation/SearchBox';
+import AddMovieButton from '../../presentation/AddMovieButton';
+
 import Facets from '../Facets';
 import MovieResults from '../MovieResults';
+import AddMovieModal from '../AddMovieModal';
 
 import Axios from '../../dataProviders/Axios';
 
@@ -22,7 +25,8 @@ class HomePage extends Component {
       activeFacets: [],
       resultsCount: 0,
       pageNumber: 0,
-      hitsPerPage: 0
+      hitsPerPage: 0,
+      showAddMovieModal: false
     }
   }
 
@@ -54,6 +58,18 @@ class HomePage extends Component {
     });
   }
 
+  showAddMovieModal() {
+    this.setState({
+      showAddMovieModal: true
+    });
+  }
+
+  hideAddMovieModal() {
+    this.setState({
+      showAddMovieModal: false
+    });
+  }
+
   deleteMovie(movieId) {
     Axios.delete(
       'movies/' + movieId
@@ -79,23 +95,32 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="home-page">
-        <SearchBox
-          valueChangeCallback={(value) => this.searchValueUpdated(value)} />
+      <div className="home-page-container">
+        <div className="home-page">
+          <SearchBox
+            valueChangeCallback={(value) => this.searchValueUpdated(value)} />
 
-        <section className="section">
-          <Facets
-            facets={this.state.facets} />
+          <AddMovieButton
+            onClickCallback={() => this.showAddMovieModal()} />
 
-          <MovieResults
-            counters = {{
-              resultsCount: this.state.resultsCount,
-              pageNumber: this.state.pageNumber,
-              hitsPerPage: this.state.hitsPerPage,
-            }}
-            movies={this.state.movies}
-            deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
-        </section>
+          <section className="section">
+            <Facets
+              facets={this.state.facets} />
+
+            <MovieResults
+              counters = {{
+                resultsCount: this.state.resultsCount,
+                pageNumber: this.state.pageNumber,
+                hitsPerPage: this.state.hitsPerPage,
+              }}
+              movies={this.state.movies}
+              deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
+          </section>
+        </div>
+
+        <AddMovieModal
+          isActive={this.state.showAddMovieModal}
+          closeButtonClickCallback={() => this.hideAddMovieModal()} />
       </div>
     );
   }

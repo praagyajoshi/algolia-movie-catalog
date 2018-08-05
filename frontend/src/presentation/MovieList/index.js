@@ -12,14 +12,22 @@ class MovieList extends Component {
 
   render() {
     const movie = this.props.movie;
+    var movieImageUrl = '';
+
+    if (movie.image && movie.image.length) {
+      movieImageUrl = movie.image;
+    } else if (movie.uploaded_image && movie.uploaded_image.length) {
+      movieImageUrl = movie.uploaded_image;
+    } else {
+      // TODO: add a local placeholder poster
+    }
 
     return (
       <div className="box movie-list">
         <article className="media">
           <div className="media-left">
             <figure className="image is-2by3">
-              {/* TODO: handle image being blank */}
-              <img src={ movie.image } alt="Movie poster" />
+              <img src={ movieImageUrl } alt="Movie poster" />
             </figure>
           </div>
           <div className="media-content">

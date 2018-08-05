@@ -5,6 +5,8 @@
   "dependencies": {
     "algoliasearch": "^3.30.0",
     "axios": "^0.18.0",
+    "classnames": "^2.2.6",
+    "form-data": "^2.3.2",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
