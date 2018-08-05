@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import FormData from 'form-data';
 
 import AddMovieForm from '../../presentation/AddMovieForm';
+import ModalBodyNotification from '../../presentation/ModalBodyNotification';
 
 import Axios from '../../dataProviders/Axios';
 
@@ -11,7 +12,8 @@ class AddMovieModal extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isActive: false
+      isActive: false,
+      saveSuccessful: false
     };
   }
 
@@ -52,7 +54,8 @@ class AddMovieModal extends Component {
      * post request along with the image
      */
     let data = new FormData();
-    if (receivedFormData.hasOwnProperty('uploaded_image')) {
+    if (receivedFormData.uploaded_image &&
+      receivedFormData.hasOwnProperty('uploaded_image')) {
       data.append(
         'uploaded_image',
         receivedFormData.uploaded_image,
@@ -88,7 +91,22 @@ class AddMovieModal extends Component {
       }
     ).then((response) => {
       if (response.status === 201) {
-        console.log('Saved successfully!');
+        /**
+         * Updating the state to show a success message, and to
+         * reset the form.
+         */
+        this.setState({saveSuccessful: true});
+
+        /**
+         * Waiting for a little while before closing the modal
+         * automatically.
+         */
+        setTimeout(() => {
+          this.setState({
+            saveSuccessful: false
+          });
+          this.props.closeButtonClickCallback();
+        }, 3000);
       }
     }).catch((error) => {
       alert('Something went wrong! Please try again.');
@@ -116,8 +134,13 @@ class AddMovieModal extends Component {
 
           <section className="modal-card-body">
             <AddMovieForm
+              clearState={this.state.saveSuccessful}
               submitClickCallback={(formData) => this.onFormSubmit(formData)}
               cancelClickCallback={() => this.onFormCancel()} />
+
+            { this.state.saveSuccessful &&
+              <ModalBodyNotification message="Movie saved successfully!" />
+            }
           </section>
         </div>
       </div>

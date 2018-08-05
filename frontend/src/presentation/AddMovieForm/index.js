@@ -4,7 +4,11 @@ import PropTypes from 'prop-types';
 class AddMovieForm extends Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = this.getInitialState();
+  }
+
+  getInitialState() {
+    return {
       title: '',
       year: '',
       actors: '',
@@ -13,7 +17,14 @@ class AddMovieForm extends Component {
       alternativeTitles: '',
       imageFile: null,
       imageName: ''
-    };
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.clearState !== this.props.clearState &&
+      nextProps.clearState) {
+        this.setState(this.getInitialState());
+    }
   }
 
   onValueChange(e) {
