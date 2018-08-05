@@ -9,14 +9,10 @@ class AddMovieButton extends Component {
 
   render() {
     return (
-      <section className="section">
-        <div className="container">
-          <a className="button is-warning is-active"
-            onClick={(e) => this.onClick(e)}>
-            + Add movie
-          </a>
-        </div>
-      </section>
+      <a className="button is-warning is-active"
+        onClick={(e) => this.onClick(e)}>
+        + Add movie
+      </a>
     );
   }
 }

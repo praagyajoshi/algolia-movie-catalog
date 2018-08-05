@@ -17,23 +17,15 @@ class SearchBox extends Component {
 
   render() {
     return (
-      <section className="hero is-bold is-warning">
-        <div className="hero-body">
-          <div className="container">
-            <h1 className="title">Movie Laundry</h1>
-            <h2 className="subtitle">There are not the movies you're looking for</h2>
-            <div className="field">
-              <div className="control">
-                <input type="text"
-                  className="input is-large"
-                  placeholder="Search for 'Jurassic Park' or 'Brad Pitt'"
-                  value={this.state.searchValue}
-                  onChange={(e) => this.handleChange(e)} />
-              </div>
-            </div>
-          </div>
+      <div className="field">
+        <div className="control">
+          <input type="text"
+            className="input is-large"
+            placeholder="Search for 'Jurassic Park' or 'Brad Pitt'"
+            value={this.state.searchValue}
+            onChange={(e) => this.handleChange(e)} />
         </div>
-      </section>
+      </div>
     );
   }
 }

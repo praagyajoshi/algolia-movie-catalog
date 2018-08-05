@@ -10,9 +10,8 @@ class FacetTagGroup extends Component {
 
     /**
      * Looping through the facetValues individually
-     * where 'key' is the facet value and
-     * 'value' is the count of available results
-     * for that facet
+     * where 'key' is the facet value and 'value' is
+     * the count of available results for that facet.
      */
     for (var key in facetValues) {
       if (facetValues.hasOwnProperty(key)) {
@@ -31,6 +30,7 @@ class FacetTagGroup extends Component {
 
   render() {
     const groupName = this.props.groupName;
+    // TODO: move to util function
     const capitalizedGroupName = groupName.charAt(0).toUpperCase() + groupName.slice(1);
 
     return (

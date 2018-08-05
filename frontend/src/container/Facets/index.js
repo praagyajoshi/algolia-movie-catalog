@@ -21,8 +21,17 @@ class Facets extends Component {
     const facets = this.state.facets;
     var renderArray = [];
 
-    // Split facets into their groups
-    // and get the tags rendered
+    /**
+     * Rendering groups of facets individually
+     * Facets are in the format:
+     * {
+     *   facet_name_1 : {facet_value_1 : count_1, facet_value_2 : count_2},
+     *   facet_name_2 : {facet_value_1 : count_1, facet_value_2 : count_2},
+     * }
+     * Key will be the name of the facet, and it's value
+     * with be an an object with a list of facet values
+     * and their count in a key value pair.
+     */
     for (var key in facets) {
       if (facets.hasOwnProperty(key)) {
         renderArray.push(
@@ -39,7 +48,7 @@ class Facets extends Component {
 
   render() {
     return (
-      <div className="facets container">
+      <div className="facets">
         {this.getFaceGroups()}
       </div>
     );

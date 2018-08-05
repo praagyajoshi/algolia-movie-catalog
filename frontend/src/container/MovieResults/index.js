@@ -50,7 +50,7 @@ class MovieResults extends Component {
 
   render() {
     return (
-      <div className="movie-results container">
+      <div className="movie-results">
         <div>
           { this.getCounters() }
         </div>

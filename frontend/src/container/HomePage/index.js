@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import SearchBox from '../../presentation/SearchBox';
 import AddMovieButton from '../../presentation/AddMovieButton';
+import Header from '../../presentation/Header';
 
 import Facets from '../Facets';
 import MovieResults from '../MovieResults';
@@ -36,26 +37,28 @@ class HomePage extends Component {
 
   searchWithAlgolia(query) {
     searchIndex.search({
-      query
+      query,
       // facetFilters: 'genre:comedy'
+      facets: ['genre', 'rating']
     }, (error, content) => {
       this.setState({
         searchQuery: query,
         movies: content.hits,
         resultsCount: content.nbHits,
         pageNumber: content.page,
-        hitsPerPage: content.hitsPerPage
-      });
-    });
-    searchIndex.search({
-      query,
-      attributesToRetrieve: ['_id'],
-      facets: ['genre', 'rating']
-    }, (error, content) => {
-      this.setState({
+        hitsPerPage: content.hitsPerPage,
         facets: content.facets
       });
     });
+    // searchIndex.search({
+    //   query,
+    //   attributesToRetrieve: ['_id'],
+    //   facets: ['genre', 'rating']
+    // }, (error, content) => {
+    //   this.setState({
+    //     facets: content.facets
+    //   });
+    // });
   }
 
   showAddMovieModal() {
@@ -97,24 +100,38 @@ class HomePage extends Component {
     return (
       <div className="home-page-container">
         <div className="home-page">
-          <SearchBox
-            valueChangeCallback={(value) => this.searchValueUpdated(value)} />
 
-          <AddMovieButton
-            onClickCallback={() => this.showAddMovieModal()} />
+          <Header>
+            <AddMovieButton
+              onClickCallback={() => this.showAddMovieModal()} />
+          </Header>
 
           <section className="section">
-            <Facets
-              facets={this.state.facets} />
+            <div className="container home-container">
+              <div className="columns">
+                <div className="column is-one-quarter">
+                  <Facets
+                    facets={this.state.facets} />
+                </div>
+                <div className="column is-three-quarters">
+                  <SearchBox
+                    valueChangeCallback={(value) => this.searchValueUpdated(value)} />
 
-            <MovieResults
-              counters = {{
-                resultsCount: this.state.resultsCount,
-                pageNumber: this.state.pageNumber,
-                hitsPerPage: this.state.hitsPerPage,
-              }}
-              movies={this.state.movies}
-              deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
+                  <MovieResults
+                    counters={{
+                      resultsCount: this.state.resultsCount,
+                      pageNumber: this.state.pageNumber,
+                      hitsPerPage: this.state.hitsPerPage,
+                    }}
+                    movies={this.state.movies}
+                    deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
+                </div>
+              </div>
+            </div>
+          </section>
+
+
+          <section className="section">
           </section>
         </div>
 
