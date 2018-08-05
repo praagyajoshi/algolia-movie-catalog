@@ -1,0 +1,8 @@
+.add-movie-form.was-validated {
+  .input:invalid {
+    border-color: #ff3860;
+  }
+  .input:valid~.help {
+    display: none;
+  }
+}

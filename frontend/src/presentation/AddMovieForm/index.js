@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
+import './style.css';
 
 class AddMovieForm extends Component {
   constructor(props) {
@@ -13,10 +16,11 @@ class AddMovieForm extends Component {
       year: '',
       actors: '',
       genre: '',
-      rating: 0,
+      rating: '3',
       alternativeTitles: '',
       imageFile: null,
-      imageName: ''
+      imageName: '',
+      wasFormValidated: false
     }
   }
 
@@ -41,8 +45,92 @@ class AddMovieForm extends Component {
     });
   }
 
+  validateForm() {
+    const formLength = this.formElement.length;
+
+    this.setState({
+      wasFormValidated: true
+    });
+
+    /**
+     * Using HTML5 form validation API for client
+     * side validation.
+     */
+    if (this.formElement.checkValidity() === false) {
+      /**
+       * If the form didn't pass validation, look through
+       * all the 'input' elements of the form and set an
+       * error message for them.
+       * The error message is also provided by the HTML5
+       * validation API.
+       */
+      for (let i = 0; i < formLength; i++) {
+        const element = this.formElement[i];
+        if (element.nodeName.toLowerCase() !== 'input') {
+          continue;
+        }
+
+        let parentElement = element.parentNode;
+
+        /**
+         * For radio buttons, we will have to go one level higher
+         * to access the message element because of the radio
+         * button's hierarchy.
+         */
+        if (element.type.toLowerCase() === 'radio') {
+          parentElement = parentElement.parentNode;
+        }
+
+        const errorLabel = parentElement.querySelector('.help');
+        if (errorLabel) {
+          if (!element.validity.valid) {
+            errorLabel.textContent = element.validationMessage;
+          } else {
+            errorLabel.textContent = '';
+          }
+        }
+      }
+
+      return false;
+    } else {
+      /**
+       * If the form didn't passed validation, look through
+       * all the 'input' elements of the form and clear the
+       * error message for them.
+       */
+      for (let i = 0; i < formLength; i++) {
+        const element = this.formElement[i];
+        if (element.nodeName.toLowerCase() !== 'input') {
+          continue;
+        }
+
+        let parentElement = element.parentNode;
+
+        /**
+         * For radio buttons, we will have to go one level higher
+         * to access the message element because of the radio
+         * button's hierarchy.
+         */
+        if (element.type.toLowerCase() === 'radio') {
+          parentElement = parentElement.parentNode;
+        }
+
+        const errorLabel = parentElement.querySelector('.help');
+        if (errorLabel) {
+          errorLabel.textContent = '';
+        }
+      }
+
+      return true;
+    }
+  }
+
   onSubmitClick(e) {
     e.preventDefault();
+
+    if (!this.validateForm()) {
+      return;
+    }
 
     // TODO: move trim to the backend
     const actorsArray = this.state.actors.trim().split(/\s*,\s*/);
@@ -66,9 +154,31 @@ class AddMovieForm extends Component {
     this.props.cancelClickCallback();
   }
 
+  getRadioButtons() {
+    return ['1', '2', '3', '4', '5'].map((rating) => {
+      return (
+        <label key={rating} className="radio">
+          <input
+            type="radio"
+            name="rating"
+            value={rating}
+            required
+            onChange={(e) => this.onValueChange(e)}
+            checked={this.state.rating === rating} />
+          &nbsp;{rating}
+        </label>
+      );
+    });
+  }
+
   render() {
+    const formClasses = classNames({
+      'add-movie-form': true,
+      'was-validated': this.state.wasFormValidated
+    });
+
     return (
-      <form>
+      <form className={formClasses} ref={form => this.formElement = form} noValidate>
         <div className="field">
           <label className="label">Title</label>
           <div className="control">
@@ -78,7 +188,10 @@ class AddMovieForm extends Component {
               onChange={(e) => this.onValueChange(e)}
               name="title"
               type="text"
+              required
+              minLength="5"
               placeholder="The Matrix" />
+            <p className="help is-danger"></p>
           </div>
         </div>
 
@@ -90,8 +203,12 @@ class AddMovieForm extends Component {
               value={this.state.year}
               onChange={(e) => this.onValueChange(e)}
               name="year"
-              type="text"
+              type="number"
+              required
+              min="1906"
+              max="2018"
               placeholder="1996" />
+            <p className="help is-danger"></p>
           </div>
         </div>
 
@@ -117,7 +234,10 @@ class AddMovieForm extends Component {
               onChange={(e) => this.onValueChange(e)}
               name="genre"
               type="text"
+              required
+              minLength="5"
               placeholder="Drama, suspense, comedy" />
+            <p className="help is-danger"></p>
           </div>
         </div>
 
@@ -160,51 +280,8 @@ class AddMovieForm extends Component {
         <div className="field">
           <label className="label">Rating</label>
           <div className="control">
-            <label className="radio">
-              <input
-                type="radio"
-                name="rating"
-                value="1"
-                onChange={(e) => this.onValueChange(e)}
-                checked={this.state.rating === "1"}/>
-              &nbsp;1
-            </label>
-            <label className="radio">
-              <input
-                type="radio"
-                name="rating"
-                value="2"
-                onChange={(e) => this.onValueChange(e)}
-                checked={this.state.rating === "2"}/>
-              &nbsp;2
-            </label>
-            <label className="radio">
-              <input
-                type="radio"
-                name="rating"
-                value="3"
-                onChange={(e) => this.onValueChange(e)}
-                checked={this.state.rating === "3"}/>
-              &nbsp;3
-            </label>
-            <label className="radio">
-              <input
-                type="radio"
-                name="rating"
-                value="4"
-                onChange={(e) => this.onValueChange(e)}
-                checked={this.state.rating === "4"}/>
-              &nbsp;4
-            </label>
-            <label className="radio">
-              <input
-                type="radio"
-                name="rating"
-                value="5"
-                onChange={(e) => this.onValueChange(e)}
-                checked={this.state.rating === "5"}/>
-              &nbsp;5
-            </label>
+            { this.getRadioButtons() }
+            <p className="help is-danger"></p>
           </div>
         </div>
 
