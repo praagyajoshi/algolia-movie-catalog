@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { addUrlProps, UrlQueryParamTypes, UrlUpdateTypes } from 'react-url-query';
 
-import FacetTagGroup from '../../presentation/FacetTagGroup';
+import RatingFacetGroup from '../RatingFacetGroup';
+import GenreFacetGroup from '../GenreFacetGroup';
 
 // TODO: move to a constants file?
 const urlPropsQueryConfig = {
@@ -14,13 +15,17 @@ class Facets extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      facets: {}
+      facets: {},
+      ratingFacetActive: this.props.rating ? this.props.rating : null,
+      genreFacetActive: this.props.genre ? this.props.genre : []
     };
   }
 
   componentWillReceiveProps(nextProps) {
     this.setState({
-      facets: nextProps.facets
+      facets: nextProps.facets,
+      ratingFacetActive: nextProps.rating ? nextProps.rating : null,
+      genreFacetActive: nextProps.genre ? nextProps.genre : []
     });
   }
 
@@ -81,13 +86,26 @@ class Facets extends Component {
      */
     for (var key in facets) {
       if (facets.hasOwnProperty(key)) {
-        renderArray.push(
-          <FacetTagGroup
-            key={key}
-            facetValues={facets[key]}
-            groupName={key}
-            toggleSelectionCallback={(value, facetType) => this.toggleSelectionCallback(value, facetType)} />
-        );
+        // TODO: introduce constants for checking type
+        if (key.toLowerCase() === 'rating') {
+          renderArray.push(
+            <RatingFacetGroup
+              key={key}
+              facetValues={facets[key]}
+              groupName={key}
+              toggleSelectionCallback={(value, facetType) => this.toggleSelectionCallback(value, facetType)}
+              ratingFacetActive={this.state.ratingFacetActive} />
+          );
+        } else if (key.toLowerCase() === 'genre') {
+          renderArray.push(
+            <GenreFacetGroup
+              key={key}
+              facetValues={facets[key]}
+              groupName={key}
+              toggleSelectionCallback={(value, facetType) => this.toggleSelectionCallback(value, facetType)}
+              genreFacetActive={this.state.genreFacetActive} />
+          );
+        }
       }
     }
 
