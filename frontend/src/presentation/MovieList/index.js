@@ -4,6 +4,12 @@ import PropTypes from 'prop-types';
 import './style.css';
 
 class MovieList extends Component {
+
+  onDeleteClick(e) {
+    e.preventDefault();
+    this.props.deleteMovieCallback(this.props.movie.objectID);
+  }
+
   render() {
     const movie = this.props.movie;
 
@@ -26,6 +32,16 @@ class MovieList extends Component {
                 { movie.actors.join(', ') }
               </p>
             </div>
+            <nav className="level is-mobile">
+              <div className="level-left">
+                <a
+                  className="level-item button is-small is-danger is-outlined"
+                  aria-label="delete"
+                  onClick={(e) => this.onDeleteClick(e)}>
+                  Delete
+                </a>
+              </div>
+            </nav>
           </div>
         </article>
       </div>
@@ -34,7 +50,8 @@ class MovieList extends Component {
 }
 
 MovieList.propTypes = {
-  movie: PropTypes.object.isRequired
+  movie: PropTypes.object.isRequired,
+  deleteMovieCallback: PropTypes.func.isRequired
 }
 
 export default MovieList;

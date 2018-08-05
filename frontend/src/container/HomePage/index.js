@@ -4,16 +4,19 @@ import SearchBox from '../../presentation/SearchBox';
 import Facets from '../Facets';
 import MovieResults from '../MovieResults';
 
+import Axios from '../../dataProviders/Axios';
+
 // TODO: get application ID and key from env file
-var algoliaSearch = require('algoliasearch');
-var searchClient = algoliaSearch('Q9082UFEFH', '999cbc167aea99acb23b92054ac46e2f');
-var searchIndex = searchClient.initIndex('Movie');
+const algoliaSearch = require('algoliasearch');
+const searchClient = algoliaSearch('Q9082UFEFH', '999cbc167aea99acb23b92054ac46e2f');
+const searchIndex = searchClient.initIndex('Movie');
 
 class HomePage extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      searchQuery: '',
       movies: [],
       facets: {},
       activeFacets: [],
@@ -33,6 +36,7 @@ class HomePage extends Component {
       // facetFilters: 'genre:comedy'
     }, (error, content) => {
       this.setState({
+        searchQuery: query,
         movies: content.hits,
         resultsCount: content.nbHits,
         pageNumber: content.page,
@@ -47,6 +51,29 @@ class HomePage extends Component {
       this.setState({
         facets: content.facets
       });
+    });
+  }
+
+  deleteMovie(movieId) {
+    Axios.delete(
+      'movies/' + movieId
+    ).then((response) => {
+      if (response.status === 204) {
+        this.removeMovieFromLocalData(movieId);
+      }
+    }).catch((error) => {
+      alert('Could not delete the movie! Please try again.');
+    });
+  }
+
+  removeMovieFromLocalData(movieId) {
+    const movies = this.state.movies;
+    const newMovies = movies.filter((movie) => {
+      return movie.objectID !== movieId
+    });
+
+    this.setState({
+      movies: newMovies
     });
   }
 
@@ -66,7 +93,8 @@ class HomePage extends Component {
               pageNumber: this.state.pageNumber,
               hitsPerPage: this.state.hitsPerPage,
             }}
-            movies={this.state.movies} />
+            movies={this.state.movies}
+            deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
         </section>
       </div>
     );

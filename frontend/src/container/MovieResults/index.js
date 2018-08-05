@@ -16,7 +16,10 @@ class MovieResults extends Component {
 
   getMovieList(movie) {
     return (
-      <MovieList key={movie._id.$oid} movie={movie} />
+      <MovieList
+        key={movie._id.$oid}
+        movie={movie}
+        deleteMovieCallback={(movieId) => this.deleteMovieClicked(movieId)} />
     );
   }
 
@@ -41,6 +44,10 @@ class MovieResults extends Component {
     }
   }
 
+  deleteMovieClicked(movieId) {
+    this.props.deleteMovieCallback(movieId);
+  }
+
   render() {
     return (
       <div className="movie-results container">
@@ -57,7 +64,8 @@ class MovieResults extends Component {
 
 MovieResults.propTypes = {
   movies: PropTypes.array.isRequired,
-  counters: PropTypes.object.isRequired
+  counters: PropTypes.object.isRequired,
+  deleteMovieCallback: PropTypes.func.isRequired
 }
 
 export default MovieResults;
