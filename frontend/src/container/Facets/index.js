@@ -1,7 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { addUrlProps, UrlQueryParamTypes, UrlUpdateTypes } from 'react-url-query';
 
 import FacetTagGroup from '../../presentation/FacetTagGroup';
+
+// TODO: move to a constants file?
+const urlPropsQueryConfig = {
+  genre: { type: UrlQueryParamTypes.array, updateType: UrlUpdateTypes.pushIn },
+  rating: { type: UrlQueryParamTypes.number, updateType: UrlUpdateTypes.pushIn }
+}
 
 class Facets extends Component {
   constructor(props) {
@@ -18,7 +25,43 @@ class Facets extends Component {
   }
 
   toggleSelectionCallback(value, facetType) {
-    console.log('reached here!');
+    // TODO: introduce constants for checking type
+    if (facetType.toLowerCase() === 'rating') {
+      this.handleRatingFacetToggle(value);
+    } else if (facetType.toLowerCase() === 'genre') {
+      this.handleGenreFacetToggle(value);
+    }
+  }
+
+  handleRatingFacetToggle(value) {
+    const { rating, onChangeRating } = this.props;
+    const ratingInteger = parseInt(value, 10);
+
+    if (rating === ratingInteger) {
+      onChangeRating(null);
+    } else {
+      onChangeRating(ratingInteger);
+    }
+  }
+
+  handleGenreFacetToggle(value) {
+    const lowercaseValue = value.toLowerCase();
+    const { genre, onChangeGenre } = this.props;
+    let newGenre;
+
+    if (!genre) {
+      newGenre = [];
+    } else {
+      newGenre = genre;
+    }
+
+    if (newGenre.includes(lowercaseValue)) {
+      newGenre = newGenre.filter(genre => genre !== lowercaseValue);
+    } else {
+      newGenre = newGenre.concat(lowercaseValue);
+    }
+
+    onChangeGenre(newGenre);
   }
 
   getFaceGroups() {
@@ -61,7 +104,12 @@ class Facets extends Component {
 }
 
 Facets.propTypes = {
-  facets: PropTypes.object.isRequired
+  facets: PropTypes.object.isRequired,
+  genre: PropTypes.array,
+  rating: PropTypes.number,
+  onChangeGenre: PropTypes.func,
+  onChangeRating: PropTypes.func,
+  onChangeUrlQueryParams: PropTypes.func
 }
 
-export default Facets;
+export default addUrlProps({ urlPropsQueryConfig })(Facets);

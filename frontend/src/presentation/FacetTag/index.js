@@ -5,7 +5,7 @@ import ClassNames from 'classnames';
 import './style.css';
 
 class FacetTag extends Component {
-  onClick(e) {
+  onTagClick(e) {
     e.preventDefault();
     this.props.toggleSelectionCallback(this.props.name);
   }
@@ -19,7 +19,7 @@ class FacetTag extends Component {
     });
 
     return (
-      <a className="facet-value-link">
+      <a className="facet-value-link" onClick={(e) => this.onTagClick(e)}>
         <div className={tagClassNames}>
           <div className="is-name">{this.props.name + postfix}</div>
           <div className="is-count">{this.props.count}</div>

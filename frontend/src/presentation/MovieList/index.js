@@ -37,6 +37,8 @@ class MovieList extends Component {
                 <small>{movie.year}</small>&nbsp;&middot;&nbsp;
                 <small>Rating: { movie.rating }</small>
                 <br />
+                <strong>Genre:</strong>&nbsp;{ movie.genre.join(', ') }
+                <br />
                 { movie.actors.join(', ') }
               </p>
             </div>

@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { addUrlProps, UrlQueryParamTypes, UrlUpdateTypes } from 'react-url-query';
 
 import SearchBox from '../../presentation/SearchBox';
 import AddMovieButton from '../../presentation/AddMovieButton';
@@ -16,6 +18,12 @@ const algoliaSearch = require('algoliasearch');
 const searchClient = algoliaSearch('Q9082UFEFH', '999cbc167aea99acb23b92054ac46e2f');
 const searchIndex = searchClient.initIndex('Movie');
 
+// TODO: move to a constants file?
+const urlPropsQueryConfig = {
+  genre: { type: UrlQueryParamTypes.array, updateType: UrlUpdateTypes.pushIn },
+  rating: { type: UrlQueryParamTypes.number, updateType: UrlUpdateTypes.pushIn }
+}
+
 class HomePage extends Component {
 
   constructor(props) {
@@ -24,11 +32,41 @@ class HomePage extends Component {
       searchQuery: '',
       movies: [],
       facets: {},
+      facetFilters: [],
       resultsCount: 0,
       pageNumber: 0,
       hitsPerPage: 0,
       showAddMovieModal: false
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.buildFacetFilters(nextProps.rating, nextProps.genre);
+  }
+
+  buildFacetFilters(rating, genre) {
+    let filters = [];
+    let ratingFilters = [];
+
+    // Build filters for genre
+    if (genre) {
+      genre.forEach(selectedGenre => {
+        filters.push("genre:" + selectedGenre);
+      });
+    }
+
+    // Build filters for rating
+    if (rating) {
+      for (let i = rating; i <= 5; i++) {
+        ratingFilters.push("rating:" + i);
+      }
+
+      filters.push(ratingFilters);
+    }
+
+    this.setState({
+      facetFilters: filters
+    }, () => this.searchWithAlgolia(this.state.searchQuery));
   }
 
   searchValueUpdated(newValue) {
@@ -38,9 +76,10 @@ class HomePage extends Component {
   searchWithAlgolia(query) {
     searchIndex.search({
       query,
-      // facetFilters: 'genre:comedy'
+      facetFilters: this.state.facetFilters,
       facets: ['genre', 'rating']
     }, (error, content) => {
+      // TODO: catch error
       this.setState({
         searchQuery: query,
         movies: content.hits,
@@ -50,15 +89,6 @@ class HomePage extends Component {
         facets: content.facets
       });
     });
-    // searchIndex.search({
-    //   query,
-    //   attributesToRetrieve: ['_id'],
-    //   facets: ['genre', 'rating']
-    // }, (error, content) => {
-    //   this.setState({
-    //     facets: content.facets
-    //   });
-    // });
   }
 
   showAddMovieModal() {
@@ -135,4 +165,12 @@ class HomePage extends Component {
   }
 }
 
-export default HomePage;
+HomePage.propTypes = {
+  genre: PropTypes.array,
+  rating: PropTypes.number,
+  onChangeGenre: PropTypes.func,
+  onChangeRating: PropTypes.func,
+  onChangeUrlQueryParams: PropTypes.func
+}
+
+export default addUrlProps({ urlPropsQueryConfig })(HomePage);

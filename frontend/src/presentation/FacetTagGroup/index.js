@@ -12,7 +12,6 @@ class FacetTagGroup extends Component {
   getTags() {
     const facetValues = this.props.facetValues;
     var renderArray = [];
-    const activeFacets = this.props.selectedFacets;
 
     /**
      * Looping through the facetValues individually
@@ -30,7 +29,7 @@ class FacetTagGroup extends Component {
             count={facetValues[key]}
             name={key}
             isRating={this.props.groupName.toLowerCase() === 'rating'}
-            isActive={activeFacets.includes(key.toLowerCase())}
+            isActive={false}
             toggleSelectionCallback={(value) => this.toggleSelectionCallback(value)} />
         );
       }
@@ -60,7 +59,6 @@ class FacetTagGroup extends Component {
 FacetTagGroup.propTypes = {
   facetValues: PropTypes.object.isRequired,
   groupName: PropTypes.string.isRequired,
-  selectedFacets: PropTypes.array.isRequired,
   toggleSelectionCallback: PropTypes.func.isRequired
 }
 
