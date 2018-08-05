@@ -79,7 +79,7 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div>
+      <div className="home-page">
         <SearchBox
           valueChangeCallback={(value) => this.searchValueUpdated(value)} />
 

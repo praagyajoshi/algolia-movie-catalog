@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 
 import FacetTagGroup from '../../presentation/FacetTagGroup';
 
-import './style.css';
-
 class Facets extends Component {
   constructor(props) {
     super(props);
