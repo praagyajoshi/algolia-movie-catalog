@@ -29,8 +29,8 @@ class HomePage extends Component {
 
   searchWithAlgolia(query) {
     searchIndex.search({
-      query,
-      facetFilters: 'genre:comedy'
+      query
+      // facetFilters: 'genre:comedy'
     }, (error, content) => {
       this.setState({
         movies: content.hits,
@@ -53,19 +53,10 @@ class HomePage extends Component {
   render() {
     return (
       <div>
-        <section className="hero is-bold is-warning">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">Movie Laundry</h1>
-              <h2 className="subtitle">There are not the movies you're looking for</h2>
-            </div>
-          </div>
-        </section>
+        <SearchBox
+          valueChangeCallback={(value) => this.searchValueUpdated(value)} />
 
         <section className="section">
-          <SearchBox
-            valueChangeCallback={(value) => this.searchValueUpdated(value)} />
-
           <Facets
             facets={this.state.facets} />
 
