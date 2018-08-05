@@ -17,6 +17,10 @@ class Facets extends Component {
     });
   }
 
+  toggleSelectionCallback(value, facetType) {
+    console.log('reached here!');
+  }
+
   getFaceGroups() {
     const facets = this.state.facets;
     var renderArray = [];
@@ -38,7 +42,8 @@ class Facets extends Component {
           <FacetTagGroup
             key={key}
             facetValues={facets[key]}
-            groupName={key} />
+            groupName={key}
+            toggleSelectionCallback={(value, facetType) => this.toggleSelectionCallback(value, facetType)} />
         );
       }
     }

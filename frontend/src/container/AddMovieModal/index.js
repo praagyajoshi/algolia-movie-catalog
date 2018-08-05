@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import ClassNames from 'classnames';
 import FormData from 'form-data';
 
 import AddMovieForm from '../../presentation/AddMovieForm';
@@ -114,7 +114,7 @@ class AddMovieModal extends Component {
   }
 
   render() {
-    const modalClasses = classNames({
+    const modalClasses = ClassNames({
       'modal': true,
       'is-active': this.state.isActive
     });

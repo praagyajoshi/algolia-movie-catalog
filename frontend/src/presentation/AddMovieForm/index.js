@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import classNames from 'classnames';
+import ClassNames from 'classnames';
 
 import './style.css';
 
@@ -172,7 +172,7 @@ class AddMovieForm extends Component {
   }
 
   render() {
-    const formClasses = classNames({
+    const formClasses = ClassNames({
       'add-movie-form': true,
       'was-validated': this.state.wasFormValidated
     });

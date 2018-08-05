@@ -24,7 +24,6 @@ class HomePage extends Component {
       searchQuery: '',
       movies: [],
       facets: {},
-      activeFacets: [],
       resultsCount: 0,
       pageNumber: 0,
       hitsPerPage: 0,
