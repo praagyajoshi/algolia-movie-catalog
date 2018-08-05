@@ -23,12 +23,18 @@ module Api::V1
     private
 
     def movie_params
+      params[:alternative_titles] = params[:alternative_titles].split(',')
+      params[:actors] = params[:actors].split(',')
+      params[:genre] = params[:genre].split(',')
+
       # Whitelist params
       # TODO: add other params as well
       params.permit(
         :title,
         { alternative_titles: [] },
         { actors: [] },
+        { genre: [] },
+        :rating,
         :year,
         :uploaded_image
       )
