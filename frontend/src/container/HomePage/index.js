@@ -49,10 +49,10 @@ class HomePage extends Component {
 
   componentDidMount() {
     /**
-     * Fetch all the movies from the search provider
-     * on initial page load.
+     * Build facet filters based on the URL, and fetch movies
+     * from the search provider on initial page load.
      */
-    this.searchMovies('');
+    this.buildFacetFilters(this.props.rating, this.props.genre);
   }
 
   buildFacetFilters(rating, genre) {
