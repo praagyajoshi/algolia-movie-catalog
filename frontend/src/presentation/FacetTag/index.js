@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 
+import { FACET_RATING } from '../../constants/facets';
+
 import './style.css';
 
 class FacetTag extends Component {
@@ -11,7 +13,8 @@ class FacetTag extends Component {
   }
 
   render() {
-    const postfix = this.props.isRating ? ' and above' : '';
+    const isRating = (this.props.facetType === FACET_RATING);
+    const postfix = isRating ? ' and above' : '';
 
     const tagClassNames = ClassNames({
       'facet-tag': true,
@@ -23,7 +26,7 @@ class FacetTag extends Component {
         <div className={tagClassNames}>
           <div className="is-name">
             {this.props.name}&nbsp;
-            {this.props.isRating && (<i className="fas fa-star star-rating"></i>)}
+            {isRating && (<i className="fas fa-star star-rating"></i>)}
             {postfix}
           </div>
           <div className="is-count">{this.props.count}</div>
@@ -42,7 +45,7 @@ class FacetTag extends Component {
 FacetTag.propTypes = {
   name: PropTypes.string.isRequired,
   count: PropTypes.number.isRequired,
-  isRating: PropTypes.bool.isRequired,
+  facetType: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
   toggleSelectionCallback: PropTypes.func.isRequired
 }

@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { addUrlProps, UrlQueryParamTypes, UrlUpdateTypes } from 'react-url-query';
 
-import RatingFacetGroup from '../RatingFacetGroup';
-import GenreFacetGroup from '../GenreFacetGroup';
+import { FACET_GENRE, FACET_RATING } from '../../constants/facets';
+
+import FacetGroup from '../FacetGroup';
 
 // TODO: move to a constants file?
 const urlPropsQueryConfig = {
@@ -30,10 +31,9 @@ class Facets extends Component {
   }
 
   toggleSelectionCallback(value, facetType) {
-    // TODO: introduce constants for checking type
-    if (facetType.toLowerCase() === 'rating') {
+    if (facetType === FACET_RATING) {
       this.handleRatingFacetToggle(value);
-    } else if (facetType.toLowerCase() === 'genre') {
+    } else if (facetType === FACET_GENRE) {
       this.handleGenreFacetToggle(value);
     }
   }
@@ -41,9 +41,9 @@ class Facets extends Component {
   resetFilters(facetType) {
     const { onChangeGenre, onChangeRating } = this.props;
 
-    if (facetType.toLowerCase() === 'rating') {
+    if (facetType === FACET_RATING) {
       onChangeRating(null);
-    } else if (facetType.toLowerCase() === 'genre') {
+    } else if (facetType === FACET_GENRE) {
       onChangeGenre(null);
     }
   }
@@ -53,6 +53,10 @@ class Facets extends Component {
     const ratingInteger = parseInt(value, 10);
 
     if (rating === ratingInteger) {
+      /**
+       * If the same rating was clicked again, then we need
+       * to remove it as the rating filter.
+       */
       onChangeRating(null);
     } else {
       onChangeRating(ratingInteger);
@@ -71,6 +75,10 @@ class Facets extends Component {
     }
 
     if (newGenre.includes(lowercaseValue)) {
+      /**
+       * If the same genre was clicked again, then we need
+       * to remove it from the list of genre filterss.
+       */
       newGenre = newGenre.filter(genre => genre !== lowercaseValue);
     } else {
       newGenre = newGenre.concat(lowercaseValue);
@@ -79,7 +87,7 @@ class Facets extends Component {
     onChangeGenre(newGenre);
   }
 
-  getFaceGroups() {
+  getFacetGroups() {
     const facets = this.state.facets;
     var renderArray = [];
 
@@ -96,26 +104,30 @@ class Facets extends Component {
      */
     for (var key in facets) {
       if (facets.hasOwnProperty(key)) {
-        // TODO: introduce constants for checking type
-        if (key.toLowerCase() === 'rating') {
+        if (key === FACET_RATING) {
+          /**
+           * While the rating is a number, as opposed to an array for genre,
+           * we are passing it as an array to maintain uniformity for the
+           * FacetGroup component.
+           */
           renderArray.push(
-            <RatingFacetGroup
+            <FacetGroup
               key={key}
               facetValues={facets[key]}
-              groupName={key}
+              facetType={FACET_RATING}
               toggleSelectionCallback={(value, facetType) => this.toggleSelectionCallback(value, facetType)}
               resetFiltersCallback={(facetType) => this.resetFilters(facetType)}
-              ratingFacetActive={this.state.ratingFacetActive} />
+              facetsActive={this.state.ratingFacetActive ? [this.state.ratingFacetActive] : []} />
           );
-        } else if (key.toLowerCase() === 'genre') {
+        } else if (key === FACET_GENRE) {
           renderArray.push(
-            <GenreFacetGroup
+            <FacetGroup
               key={key}
               facetValues={facets[key]}
-              groupName={key}
+              facetType={FACET_GENRE}
               toggleSelectionCallback={(value, facetType) => this.toggleSelectionCallback(value, facetType)}
               resetFiltersCallback={(facetType) => this.resetFilters(facetType)}
-              genreFacetActive={this.state.genreFacetActive} />
+              facetsActive={this.state.genreFacetActive} />
           );
         }
       }
@@ -127,7 +139,7 @@ class Facets extends Component {
   render() {
     return (
       <div className="facets">
-        {this.getFaceGroups()}
+        {this.getFacetGroups()}
       </div>
     );
   }

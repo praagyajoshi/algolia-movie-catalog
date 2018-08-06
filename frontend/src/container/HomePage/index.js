@@ -147,7 +147,6 @@ class HomePage extends Component {
     return (
       <div className="home-page-container">
         <div className="home-page">
-
           <Header>
             <AddMovieButton
               onClickCallback={() => this.showAddMovieModal()} />

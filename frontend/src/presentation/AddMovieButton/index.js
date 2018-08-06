@@ -11,7 +11,7 @@ class AddMovieButton extends Component {
     return (
       <a className="button is-warning is-active"
         onClick={(e) => this.onClick(e)}>
-        + Add movie
+        + Add a movie
       </a>
     );
   }
