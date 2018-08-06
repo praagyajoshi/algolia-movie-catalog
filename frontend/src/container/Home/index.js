@@ -13,13 +13,8 @@ import Facets from '../Facets';
 import MovieResults from '../MovieResults';
 import AddMovieModal from '../AddMovieModal';
 
-import Axios from '../../dataProviders/Axios';
-
-// TODO: get application ID and key from env file
-// TODO: move to dataProviders/search
-const algoliaSearch = require('algoliasearch');
-const searchClient = algoliaSearch('Q9082UFEFH', '999cbc167aea99acb23b92054ac46e2f');
-const searchIndex = searchClient.initIndex('Movie');
+import { deleteMovieAPI } from '../../dataProviders/API';
+import { searchMovies } from '../../dataProviders/search';
 
 // TODO: move to a constants file?
 const urlPropsQueryConfig = {
@@ -86,23 +81,22 @@ class Home extends Component {
   }
 
   searchMovies(query, pageNumber = 0) {
-    searchIndex.search({
+    searchMovies(
       query,
-      page: pageNumber,
-      facetFilters: this.state.facetFilters,
-      facets: ['genre', 'rating']
-    }, (error, content) => {
-      // TODO: catch error
-      this.setState({
-        searchQuery: query,
-        movies: content.hits,
-        resultsCount: content.nbHits,
-        pageCount: content.nbPages,
-        pageNumber: content.page,
-        hitsPerPage: content.hitsPerPage,
-        facets: content.facets
-      });
-    });
+      pageNumber,
+      this.state.facetFilters,
+      (error, content) => {
+        this.setState({
+          searchQuery: query,
+          movies: content.hits,
+          resultsCount: content.nbHits,
+          pageCount: content.nbPages,
+          pageNumber: content.page,
+          hitsPerPage: content.hitsPerPage,
+          facets: content.facets
+        });
+      }
+    );
   }
 
   jumpToPage(pageNumber) {
@@ -122,14 +116,14 @@ class Home extends Component {
   }
 
   deleteMovie(movieId) {
-    Axios.delete(
-      'movies/' + movieId
-    ).then((response) => {
-      if (response.status === 204) {
-        this.removeMovieFromLocalData(movieId);
+    deleteMovieAPI(movieId, (error, response) => {
+      if (error) {
+        alert('Could not delete the movie! Please try again.');
+      } else if (response) {
+        if (response.status === 204) {
+          this.removeMovieFromLocalData(movieId);
+        }
       }
-    }).catch((error) => {
-      alert('Could not delete the movie! Please try again.');
     });
   }
 
@@ -140,7 +134,8 @@ class Home extends Component {
     });
 
     this.setState({
-      movies: newMovies
+      movies: newMovies,
+      resultsCount: this.state.resultsCount - 1
     });
   }
 

@@ -226,7 +226,7 @@ class AddMovieForm extends Component {
         </div>
 
         <div className="field">
-          <label className="label">Genre</label>
+          <label className="label">Genre *</label>
           <div className="control">
             <input
               className="input"

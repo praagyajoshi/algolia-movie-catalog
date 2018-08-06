@@ -4,7 +4,7 @@ import { hot } from 'react-hot-loader';
 import history from './history';
 import Home from './container/Home';
 
-import './App.css';
+import './styles/main.css';
 
 class App extends Component {
   componentDidMount() {
