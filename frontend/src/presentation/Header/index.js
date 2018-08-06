@@ -1,40 +1,29 @@
 import React, { Component } from 'react';
 
+import './style.css';
+
 class Header extends Component {
   render() {
     return (
-      <section className="hero is-bold is-link">
-        <div className="hero-head">
+      <section className="hero hero-header">
 
-          <nav className="navbar">
-            <div className="container">
-              <div className="navbar-brand">
-                <a href="/" className="navbar-item">
+        <div className="hero-body">
+          <div className="header-content">
+            <div className="columns">
+              <div className="column is-half">
+                <a href="/">
                   <h3 className="title is-3">
+                    <i className="fas fa-film"></i>
+                    &nbsp;
                     Movie Laundry
                   </h3>
                 </a>
-
-                <a role="button" className="navbar-burger" aria-label="menu" aria-expanded="false">
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                  <span aria-hidden="true"></span>
-                </a>
               </div>
-
-              <div className="navbar-menu">
-                <div className="navbar-end">
-                  <span className="navbar-item">
-                    {this.props.children}
-                  </span>
-                </div>
+              <div className="column is-half">
+                {this.props.children}
               </div>
             </div>
-          </nav>
-
-        </div>
-
-        <div className="hero-body">
+          </div>
         </div>
       </section>
     );
