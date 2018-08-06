@@ -11,7 +11,7 @@ class FacetTag extends Component {
   }
 
   render() {
-    let postfix = this.props.isRating ? ' and above' : '';
+    const postfix = this.props.isRating ? ' and above' : '';
 
     const tagClassNames = ClassNames({
       'facet-tag': true,
@@ -21,7 +21,11 @@ class FacetTag extends Component {
     return (
       <a className="facet-value-link" onClick={(e) => this.onTagClick(e)}>
         <div className={tagClassNames}>
-          <div className="is-name">{this.props.name + postfix}</div>
+          <div className="is-name">
+            {this.props.name}&nbsp;
+            {this.props.isRating && (<i className="fas fa-star star-rating"></i>)}
+            {postfix}
+          </div>
           <div className="is-count">{this.props.count}</div>
           <div className="icon active-icon">
             <i className="fas fa-check"></i>

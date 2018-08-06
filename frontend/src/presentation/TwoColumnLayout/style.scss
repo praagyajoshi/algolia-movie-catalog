@@ -1,4 +1,5 @@
 @import 'styles/_colours.scss';
+@import 'bulma/sass/utilities/_all';
 
 .section.two-column-layout {
   padding-bottom: 0;
@@ -17,6 +18,16 @@
         margin-top: 0.75rem;
         &:first-of-type {
           border-right: solid 1px $border-colour-transparent;
+        }
+
+        .right-column-container {
+          @include from($tablet) {
+            padding-left: 0.75rem;
+          }
+
+          .field:not(:last-child) {
+            margin-bottom: 1.5rem;
+          }
         }
       }
     }

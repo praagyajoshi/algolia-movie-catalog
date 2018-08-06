@@ -79,7 +79,7 @@ class Pagination extends Component {
     return (
       <div className="field">
         <div className="control">
-          <nav className="pagination is-centered" aria-label="pagination">
+          <nav className="pagination is-centered is-rounded" aria-label="pagination">
             <a
               className="pagination-previous is-disabled"
               onClick={(e) => this.onPreviousClick(e)}

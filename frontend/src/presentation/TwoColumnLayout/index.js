@@ -13,7 +13,9 @@ class TwoColumnLayout extends Component {
               {this.props.left}
             </div>
             <div className="column is-three-quarters">
-              {this.props.right}
+              <div className="right-column-container">
+                {this.props.right}
+              </div>
             </div>
           </div>
         </div>
