@@ -23,6 +23,12 @@ class FacetTag extends Component {
         <div className={tagClassNames}>
           <div className="is-name">{this.props.name + postfix}</div>
           <div className="is-count">{this.props.count}</div>
+          <div className="icon active-icon">
+            <i className="fas fa-check"></i>
+          </div>
+          <div className="icon remove-icon">
+            <i className="fas fa-times"></i>
+          </div>
         </div>
       </a>
     );

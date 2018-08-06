@@ -20,12 +20,15 @@ class SearchBox extends Component {
   render() {
     return (
       <div className="field search-box-field">
-        <div className="control">
+        <div className="control has-icons-right">
           <input type="text"
             className="input is-medium"
             placeholder="Search for 'Jurassic Park' or 'Brad Pitt'"
             value={this.state.searchValue}
             onChange={(e) => this.handleChange(e)} />
+          <span className="icon is-right">
+            <i className="fas fa-search"></i>
+          </span>
         </div>
       </div>
     );
