@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 
 import history from './history';
-import HomePage from './container/HomePage';
+import Home from './container/Home';
 
 import './App.css';
 
@@ -14,7 +14,7 @@ class App extends Component {
 
   render() {
     return (
-      <HomePage />
+      <Home />
     );
   }
 }

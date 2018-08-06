@@ -27,7 +27,7 @@ const urlPropsQueryConfig = {
   rating: { type: UrlQueryParamTypes.number, updateType: UrlUpdateTypes.pushIn }
 }
 
-class HomePage extends Component {
+class Home extends Component {
 
   constructor(props) {
     super(props);
@@ -184,7 +184,7 @@ class HomePage extends Component {
   }
 }
 
-HomePage.propTypes = {
+Home.propTypes = {
   genre: PropTypes.array,
   rating: PropTypes.number,
   onChangeGenre: PropTypes.func,
@@ -192,4 +192,4 @@ HomePage.propTypes = {
   onChangeUrlQueryParams: PropTypes.func
 }
 
-export default addUrlProps({ urlPropsQueryConfig })(HomePage);
+export default addUrlProps({ urlPropsQueryConfig })(Home);
