@@ -1,0 +1,7 @@
+$text-colour: #4A4A4A;
+$text-colour-transparent: transparentize($color: $text-colour, $amount: 0.5);
+
+$border-colour: #E5E1E1;
+$border-colour-transparent: transparentize($color: $border-colour, $amount: 0.2);
+
+$background-colour: #F3F3F3;

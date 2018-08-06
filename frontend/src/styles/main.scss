@@ -3,7 +3,13 @@
 // Import the roboto font
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,700');
 
+// Import our colour list
+@import './_colours.scss';
+
 // Update Bulma's global variables
 $family-sans-serif: 'Roboto', sans-serif;
+$input-border-color: $border-colour;
+$input-background-color: $background-colour;
+$input-shadow: none;
 
 @import '../../node_modules/bulma/bulma.sass';

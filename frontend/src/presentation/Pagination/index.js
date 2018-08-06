@@ -72,6 +72,10 @@ class Pagination extends Component {
   render() {
     const { currentPage, totalPageCount } = this.props;
 
+    if (totalPageCount === 0) {
+      return (null);
+    }
+
     return (
       <div className="field">
         <div className="control">

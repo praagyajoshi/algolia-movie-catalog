@@ -1,0 +1,9 @@
+.field.facet-field {
+  &:not(:last-child) {
+    margin-bottom: 2rem;
+  }
+
+  > .label {
+    margin-bottom: 0.75rem;
+  }
+}

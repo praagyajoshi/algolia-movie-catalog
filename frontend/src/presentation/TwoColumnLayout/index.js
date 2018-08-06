@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import './style.css';
+
 class TwoColumnLayout extends Component {
   render() {
     return (
-      <section className="section">
-        <div className="container home-container">
+      <section className="section two-column-layout">
+        <div className="container">
           <div className="columns">
-            <div className="column is-one-quarter">
+            <div className="column is-one-quarter is-hidden-mobile">
               {this.props.left}
             </div>
             <div className="column is-three-quarters">

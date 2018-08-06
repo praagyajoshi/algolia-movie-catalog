@@ -25,9 +25,10 @@ class RatingFacetGroup extends Component {
 
         const facetValue = parseInt(key, 10);
         const isActive = this.props.ratingFacetActive ?
-          (facetValue >= this.props.ratingFacetActive) : false;
+          (facetValue === this.props.ratingFacetActive) : false;
 
         // TODO: sort alphabetically for rating
+        // TODO: always make sure 3, 4, and 5+ are available?
         renderArray.push(
           <FacetTag
             key={tagElementKey}

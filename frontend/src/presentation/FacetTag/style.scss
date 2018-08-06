@@ -1,3 +1,5 @@
+@import 'styles/_colours.scss';
+
 // .facet-tag:hover {
 //   .tag.is-count {
 //     position: relative;
@@ -29,12 +31,17 @@
 // }
 
 .facet-tag {
-  margin-bottom: 0.75rem;
-  margin-right: 0.75rem;
+  color: $text-colour;
+  padding: 0.75rem 0;
   display: flex;
   justify-content: space-between;
+  border-bottom: 1px solid $border-colour-transparent;
 
   &.is-active {
     font-weight: 700;
+  }
+
+  .is-count {
+    color: $text-colour-transparent;
   }
 }

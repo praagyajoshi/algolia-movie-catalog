@@ -1,0 +1,24 @@
+@import 'styles/_colours.scss';
+
+.section.two-column-layout {
+  padding-bottom: 0;
+  .container {
+    .columns {
+      padding: 1.25rem;
+      background-color: #FFFFFF;
+      border-radius: 6px;
+      box-shadow: 0 0 14px 0 rgba(69, 64, 64, 0.20);
+      border: solid 1px $border-colour;
+      transform: translateY(-70px);
+      align-items: flex-start;
+
+      .column {
+        padding-top: 0;
+        margin-top: 0.75rem;
+        &:first-of-type {
+          border-right: solid 1px $border-colour-transparent;
+        }
+      }
+    }
+  }
+}
