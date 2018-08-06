@@ -3,13 +3,27 @@ import PropTypes from 'prop-types';
 
 import SearchResults from '../../presentation/SearchResults';
 import MovieList from '../../presentation/MovieList';
+import NoResult from '../../presentation/NoResult';
 
 class MovieResults extends Component {
   getList() {
     // TODO: handle no results state
     var movies = this.props.movies;
-    return movies.map(
-      movie => this.getMovieList(movie)
+
+    if (movies.length) {
+      return movies.map(
+        movie => this.getMovieList(movie)
+      );
+    } else {
+      return this.getEmptyState();
+    }
+  }
+
+  getEmptyState() {
+    return (
+      <NoResult
+        message="No results found!"
+        emoji="😔" />
     );
   }
 

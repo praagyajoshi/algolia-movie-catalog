@@ -13,6 +13,8 @@ import Facets from '../Facets';
 import MovieResults from '../MovieResults';
 import AddMovieModal from '../AddMovieModal';
 
+import { FACET_GENRE, FACET_RATING } from '../../constants/facets';
+
 import { deleteMovieAPI } from '../../dataProviders/API';
 import { searchMovies } from '../../dataProviders/search';
 
@@ -86,6 +88,19 @@ class Home extends Component {
       pageNumber,
       this.state.facetFilters,
       (error, content) => {
+        /**
+         * If no facets were returned, then insert
+         * the keys with empty values so that we can
+         * render the title of the facet filters at least.
+         */
+        let facets = content.facets;
+        if (Object.keys(facets).length === 0) {
+          facets = {
+            [FACET_GENRE]: {},
+            [FACET_RATING]: {}
+          }
+        }
+
         this.setState({
           searchQuery: query,
           movies: content.hits,
@@ -93,7 +108,7 @@ class Home extends Component {
           pageCount: content.nbPages,
           pageNumber: content.page,
           hitsPerPage: content.hitsPerPage,
-          facets: content.facets
+          facets: facets
         });
       }
     );
