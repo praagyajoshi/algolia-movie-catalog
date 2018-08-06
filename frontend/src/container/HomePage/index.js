@@ -7,6 +7,7 @@ import AddMovieButton from '../../presentation/AddMovieButton';
 import Header from '../../presentation/Header';
 import TwoColumnLayout from '../../presentation/TwoColumnLayout';
 import Pagination from '../../presentation/Pagination';
+import SearchPage from '../../presentation/SearchPage';
 
 import Facets from '../Facets';
 import MovieResults from '../MovieResults';
@@ -145,42 +146,40 @@ class HomePage extends Component {
 
   render() {
     return (
-      <div className="home-page-container">
-        <div className="home-page">
-          <Header>
-            <AddMovieButton
-              onClickCallback={() => this.showAddMovieModal()} />
-          </Header>
+      <SearchPage>
+        <Header>
+          <AddMovieButton
+            onClickCallback={() => this.showAddMovieModal()} />
+        </Header>
 
-          <TwoColumnLayout
-            left={
-              <Facets
-                facets={this.state.facets} />
-            }
-            right={
-              <div>
-                <SearchBox
-                  valueChangeCallback={(value) => this.searchValueUpdated(value)} />
-                <MovieResults
-                  counters={{
-                    resultsCount: this.state.resultsCount,
-                    pageNumber: this.state.pageNumber,
-                    hitsPerPage: this.state.hitsPerPage,
-                  }}
-                  movies={this.state.movies}
-                  deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
-                <Pagination
-                  currentPage={this.state.pageNumber}
-                  totalPageCount={this.state.pageCount}
-                  pageNumberSelectedCallback={(pageNumber) => this.jumpToPage(pageNumber)} />
-              </div>
-            } />
-        </div>
+        <TwoColumnLayout
+          left={
+            <Facets
+              facets={this.state.facets} />
+          }
+          right={
+            <div>
+              <SearchBox
+                valueChangeCallback={(value) => this.searchValueUpdated(value)} />
+              <MovieResults
+                counters={{
+                  resultsCount: this.state.resultsCount,
+                  pageNumber: this.state.pageNumber,
+                  hitsPerPage: this.state.hitsPerPage,
+                }}
+                movies={this.state.movies}
+                deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
+              <Pagination
+                currentPage={this.state.pageNumber}
+                totalPageCount={this.state.pageCount}
+                pageNumberSelectedCallback={(pageNumber) => this.jumpToPage(pageNumber)} />
+            </div>
+          } />
 
         <AddMovieModal
           isActive={this.state.showAddMovieModal}
           closeButtonClickCallback={() => this.hideAddMovieModal()} />
-      </div>
+      </SearchPage>
     );
   }
 }

@@ -5,7 +5,6 @@ import ClassNames from 'classnames';
 class Pagination extends Component {
   onPageNumberClick(pageNumber, e) {
     e.preventDefault();
-    console.log('clicked numer = ' + pageNumber);
     this.props.pageNumberSelectedCallback(pageNumber - 1);
   }
 
