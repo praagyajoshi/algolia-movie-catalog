@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
 
-import history from './history';
+import history from './utils/history';
 import Home from './container/Home';
 
 import './styles/main.css';

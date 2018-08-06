@@ -55,6 +55,7 @@ services:
       - ./frontend/src:/app/src
       - ./frontend/public:/app/public
       - ./frontend/config-overrides.js:/app/config-overrides.js
+      - ./frontend/.env:/app/.env
     environment:
       NODE_ENV: development
     container_name: praagya-algolia-frontend

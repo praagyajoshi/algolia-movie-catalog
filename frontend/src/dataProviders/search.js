@@ -1,6 +1,12 @@
-// TODO: get application ID and key from env file
+/**
+ * Configuring the Algolia search client, and
+ * choosing the work on the 'Movie' index.
+ */
 const algoliaSearch = require('algoliasearch');
-const searchClient = algoliaSearch('Q9082UFEFH', '999cbc167aea99acb23b92054ac46e2f');
+const searchClient = algoliaSearch(
+  process.env.REACT_APP_ALGOLIA_APPLICATION_ID,
+  process.env.REACT_APP_ALGOLIA_API_KEY
+);
 const searchIndex = searchClient.initIndex('Movie');
 
 /**
