@@ -12,7 +12,8 @@ class AddMovieModal extends Component {
     super(props);
     this.state = {
       isActive: false,
-      saveSuccessful: false
+      saveSuccessful: false,
+      isProcessing: false
     };
   }
 
@@ -51,17 +52,30 @@ class AddMovieModal extends Component {
     this.props.closeButtonClickCallback();
   }
 
+  onFormSubmit(formData) {
+    this.setState({
+      isProcessing: true
+    }, () => this.saveMovie(formData));
+  }
+
   saveMovie(formData) {
     addMovieAPI(formData, (error, response) => {
       if (error) {
-        alert('Something went wrong! Please try again.');
+        this.setState({
+          isProcessing: false
+        }, () => {
+          alert('Something went wrong! Please try again.');
+        });
       } else if (response) {
         if (response.status === 201) {
           /**
            * Updating the state to show a success message, and to
            * reset the form.
            */
-          this.setState({ saveSuccessful: true });
+          this.setState({
+            saveSuccessful: true,
+            isProcessing: false
+          });
 
           /**
            * Waiting for a little while before closing the modal
@@ -100,7 +114,8 @@ class AddMovieModal extends Component {
           <section className="modal-card-body">
             <AddMovieForm
               clearState={this.state.saveSuccessful}
-              submitClickCallback={(formData) => this.saveMovie(formData)}
+              isProcessing={this.state.isProcessing}
+              submitClickCallback={(formData) => this.onFormSubmit(formData)}
               cancelClickCallback={() => this.onFormCancel()} />
 
             { this.state.saveSuccessful &&

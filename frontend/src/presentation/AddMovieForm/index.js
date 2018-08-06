@@ -177,6 +177,12 @@ class AddMovieForm extends Component {
       'was-validated': this.state.wasFormValidated
     });
 
+    const submitButtonClass = ClassNames({
+      'button': true,
+      'is-warning': true,
+      'is-loading': this.props.isProcessing
+    });
+
     return (
       <form className={formClasses} ref={form => this.formElement = form} noValidate>
         <div className="field">
@@ -288,7 +294,7 @@ class AddMovieForm extends Component {
         <div className="field is-grouped">
           <div className="control">
             <button
-              className="button is-warning"
+              className={submitButtonClass}
               onClick={(e) => this.onSubmitClick(e)}>
               Submit
             </button>
@@ -308,7 +314,8 @@ class AddMovieForm extends Component {
 
 AddMovieForm.propTypes = {
   submitClickCallback: PropTypes.func.isRequired,
-  cancelClickCallback: PropTypes.func.isRequired
+  cancelClickCallback: PropTypes.func.isRequired,
+  isProcessing: PropTypes.bool.isRequired
 }
 
 export default AddMovieForm;
