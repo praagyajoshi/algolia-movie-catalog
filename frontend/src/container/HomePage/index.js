@@ -15,6 +15,7 @@ import AddMovieModal from '../AddMovieModal';
 import Axios from '../../dataProviders/Axios';
 
 // TODO: get application ID and key from env file
+// TODO: move to dataProviders/search
 const algoliaSearch = require('algoliasearch');
 const searchClient = algoliaSearch('Q9082UFEFH', '999cbc167aea99acb23b92054ac46e2f');
 const searchIndex = searchClient.initIndex('Movie');
@@ -46,6 +47,14 @@ class HomePage extends Component {
     this.buildFacetFilters(nextProps.rating, nextProps.genre);
   }
 
+  componentDidMount() {
+    /**
+     * Fetch all the movies from the search provider
+     * on initial page load.
+     */
+    this.searchMovies('');
+  }
+
   buildFacetFilters(rating, genre) {
     let filters = [];
     let ratingFilters = [];
@@ -68,14 +77,14 @@ class HomePage extends Component {
 
     this.setState({
       facetFilters: filters
-    }, () => this.searchWithAlgolia(this.state.searchQuery));
+    }, () => this.searchMovies(this.state.searchQuery));
   }
 
   searchValueUpdated(newValue) {
-    this.searchWithAlgolia(newValue);
+    this.searchMovies(newValue);
   }
 
-  searchWithAlgolia(query, pageNumber = 0) {
+  searchMovies(query, pageNumber = 0) {
     searchIndex.search({
       query,
       page: pageNumber,
@@ -96,7 +105,7 @@ class HomePage extends Component {
   }
 
   jumpToPage(pageNumber) {
-    this.searchWithAlgolia(this.state.searchQuery, pageNumber);
+    this.searchMovies(this.state.searchQuery, pageNumber);
   }
 
   showAddMovieModal() {
