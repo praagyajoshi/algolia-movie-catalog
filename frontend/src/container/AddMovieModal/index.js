@@ -30,14 +30,14 @@ class AddMovieModal extends Component {
      * Making sure that the background can't scroll
      * when this modal is active.
      */
-    document.body.classList.add('is-clipped');
+    document.documentElement.classList.add('is-clipped');
     this.setState({
       isActive: true
     });
   }
 
   hideModal() {
-    document.body.classList.remove('is-clipped');
+    document.documentElement.classList.remove('is-clipped');
     this.setState({
       isActive: false
     });

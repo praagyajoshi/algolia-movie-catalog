@@ -180,7 +180,7 @@ class AddMovieForm extends Component {
     return (
       <form className={formClasses} ref={form => this.formElement = form} noValidate>
         <div className="field">
-          <label className="label">Title</label>
+          <label className="label">Title *</label>
           <div className="control">
             <input
               className="input"
@@ -196,7 +196,7 @@ class AddMovieForm extends Component {
         </div>
 
         <div className="field">
-          <label className="label">Year</label>
+          <label className="label">Year *</label>
           <div className="control">
             <input
               className="input"
@@ -278,7 +278,7 @@ class AddMovieForm extends Component {
         </div>
 
         <div className="field">
-          <label className="label">Rating</label>
+          <label className="label">Rating *</label>
           <div className="control">
             { this.getRadioButtons() }
             <p className="help is-danger"></p>
