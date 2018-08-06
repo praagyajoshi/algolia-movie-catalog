@@ -50,12 +50,14 @@ class MovieResults extends Component {
 
   render() {
     return (
-      <div className="movie-results">
-        <div>
-          { this.getCounters() }
-        </div>
-        <div>
-          { this.getList() }
+      <div className="field">
+        <div className="control movie-results">
+          <div>
+            {this.getCounters()}
+          </div>
+          <div>
+            {this.getList()}
+          </div>
         </div>
       </div>
     );

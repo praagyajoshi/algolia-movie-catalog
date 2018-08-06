@@ -6,6 +6,7 @@ import SearchBox from '../../presentation/SearchBox';
 import AddMovieButton from '../../presentation/AddMovieButton';
 import Header from '../../presentation/Header';
 import TwoColumnLayout from '../../presentation/TwoColumnLayout';
+import Pagination from '../../presentation/Pagination';
 
 import Facets from '../Facets';
 import MovieResults from '../MovieResults';
@@ -34,6 +35,7 @@ class HomePage extends Component {
       facets: {},
       facetFilters: [],
       resultsCount: 0,
+      pageCount: 0,
       pageNumber: 0,
       hitsPerPage: 0,
       showAddMovieModal: false
@@ -73,9 +75,10 @@ class HomePage extends Component {
     this.searchWithAlgolia(newValue);
   }
 
-  searchWithAlgolia(query) {
+  searchWithAlgolia(query, pageNumber = 0) {
     searchIndex.search({
       query,
+      page: pageNumber,
       facetFilters: this.state.facetFilters,
       facets: ['genre', 'rating']
     }, (error, content) => {
@@ -84,11 +87,16 @@ class HomePage extends Component {
         searchQuery: query,
         movies: content.hits,
         resultsCount: content.nbHits,
+        pageCount: content.nbPages,
         pageNumber: content.page,
         hitsPerPage: content.hitsPerPage,
         facets: content.facets
       });
     });
+  }
+
+  jumpToPage(pageNumber) {
+    this.searchWithAlgolia(this.state.searchQuery, pageNumber);
   }
 
   showAddMovieModal() {
@@ -153,6 +161,10 @@ class HomePage extends Component {
                   }}
                   movies={this.state.movies}
                   deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
+                <Pagination
+                  currentPage={this.state.pageNumber}
+                  totalPageCount={this.state.pageCount}
+                  pageNumberSelectedCallback={(pageNumber) => this.jumpToPage(pageNumber)} />
               </div>
             } />
         </div>
