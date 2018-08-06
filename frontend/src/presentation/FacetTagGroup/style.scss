@@ -3,7 +3,13 @@
     margin-bottom: 2rem;
   }
 
-  > .label {
-    margin-bottom: 0.75rem;
+  > .header {
+    display: flex;
+    justify-content: space-between;
+
+    .title {
+      display: inline-block;
+      margin-bottom: 0;
+    }
   }
 }

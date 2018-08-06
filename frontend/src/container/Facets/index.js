@@ -38,6 +38,16 @@ class Facets extends Component {
     }
   }
 
+  resetFilters(facetType) {
+    const { onChangeGenre, onChangeRating } = this.props;
+
+    if (facetType.toLowerCase() === 'rating') {
+      onChangeRating(null);
+    } else if (facetType.toLowerCase() === 'genre') {
+      onChangeGenre(null);
+    }
+  }
+
   handleRatingFacetToggle(value) {
     const { rating, onChangeRating } = this.props;
     const ratingInteger = parseInt(value, 10);
@@ -94,6 +104,7 @@ class Facets extends Component {
               facetValues={facets[key]}
               groupName={key}
               toggleSelectionCallback={(value, facetType) => this.toggleSelectionCallback(value, facetType)}
+              resetFiltersCallback={(facetType) => this.resetFilters(facetType)}
               ratingFacetActive={this.state.ratingFacetActive} />
           );
         } else if (key.toLowerCase() === 'genre') {
@@ -103,6 +114,7 @@ class Facets extends Component {
               facetValues={facets[key]}
               groupName={key}
               toggleSelectionCallback={(value, facetType) => this.toggleSelectionCallback(value, facetType)}
+              resetFiltersCallback={(facetType) => this.resetFilters(facetType)}
               genreFacetActive={this.state.genreFacetActive} />
           );
         }

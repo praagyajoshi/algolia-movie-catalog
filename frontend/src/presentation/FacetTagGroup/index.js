@@ -4,14 +4,24 @@ import PropTypes from 'prop-types';
 import './style.css';
 
 class FacetTagGroup extends Component {
+  onResetClick(e) {
+    e.preventDefault();
+    this.props.resetFiltersCallback();
+  }
+
   render() {
     return (
       <div className="field facet-field">
-        <label className="label">
+        <div className="header">
           <h4 className="title is-4">
             {this.props.groupName}
           </h4>
-        </label>
+          <a
+            className="button is-white is-small reset-filter-button"
+            onClick={(e) => this.onResetClick(e)} >
+            Reset
+          </a>
+        </div>
         <div className="control">
           {this.props.children}
         </div>
@@ -21,7 +31,8 @@ class FacetTagGroup extends Component {
 }
 
 FacetTagGroup.propTypes = {
-  groupName: PropTypes.string.isRequired
+  groupName: PropTypes.string.isRequired,
+  resetFiltersCallback: PropTypes.func.isRequired
 }
 
 export default FacetTagGroup;

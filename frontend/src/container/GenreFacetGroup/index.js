@@ -6,8 +6,11 @@ import FacetTag from '../../presentation/FacetTag';
 
 class GenreFacetGroup extends Component {
   toggleSelectionCallback(value) {
-    const facetType = this.props.groupName.toLowerCase();
-    this.props.toggleSelectionCallback(value, facetType);
+    this.props.toggleSelectionCallback(value, 'genre');
+  }
+
+  resetFilters() {
+    this.props.resetFiltersCallback('genre');
   }
 
   getTags() {
@@ -40,12 +43,15 @@ class GenreFacetGroup extends Component {
   }
 
   render() {
+    // TODO: remove and replace with constant
     const groupName = this.props.groupName;
     // TODO: move to util function
     const capitalizedGroupName = groupName.charAt(0).toUpperCase() + groupName.slice(1);
 
     return (
-      <FacetTagGroup groupName={capitalizedGroupName}>
+      <FacetTagGroup
+        groupName={capitalizedGroupName}
+        resetFiltersCallback={() => this.resetFilters()}>
         {this.getTags()}
       </FacetTagGroup>
     );
@@ -56,6 +62,7 @@ GenreFacetGroup.propTypes = {
   facetValues: PropTypes.object.isRequired,
   groupName: PropTypes.string.isRequired,
   toggleSelectionCallback: PropTypes.func.isRequired,
+  resetFiltersCallback: PropTypes.func.isRequired,
   genreFacetActive: PropTypes.array
 }
 
