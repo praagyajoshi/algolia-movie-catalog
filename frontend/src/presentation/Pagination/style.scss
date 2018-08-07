@@ -1,7 +1,20 @@
+@import 'styles/_colours.scss';
 @import 'bulma/sass/utilities/_all';
 
 .field.pagination-field {
   @include from($tablet) {
     padding: 0 0.75rem;
+  }
+
+  .pagination-next, .pagination-previous {
+    &:focus {
+      border-color: $yellow-colour;
+    }
+  }
+
+  .pagination-link.is-current {
+    background-color: $yellow-colour;
+    border-color: $yellow-colour;
+    color: rgba(0, 0, 0, 0.7);
   }
 }
