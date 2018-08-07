@@ -13,8 +13,11 @@ class MovieResults extends Component {
       return movies.map(
         movie => this.getMovieList(movie)
       );
-    } else {
+    } else if (!this.props.isInitialLoad) {
+      // Not showing empty state for the initial load
       return this.getEmptyState();
+    } else {
+      return (null);
     }
   }
 
@@ -56,6 +59,7 @@ MovieResults.propTypes = {
   movies: PropTypes.array.isRequired,
   counters: PropTypes.object.isRequired,
   deleteMovieCallback: PropTypes.func.isRequired,
+  isInitialLoad: PropTypes.bool.isRequired,
   deletingMovieId: PropTypes.string
 }
 

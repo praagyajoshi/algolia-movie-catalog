@@ -38,7 +38,8 @@ class Home extends Component {
       pageNumber: 0,
       hitsPerPage: 0,
       deletingMovieId: '',
-      showAddMovieModal: false
+      showAddMovieModal: false,
+      isInitialLoad: true
     }
   }
 
@@ -119,7 +120,8 @@ class Home extends Component {
           pageCount: content.nbPages,
           pageNumber: content.page,
           hitsPerPage: content.hitsPerPage,
-          facets: facets
+          facets: facets,
+          isInitialLoad: false
         });
       }
     );
@@ -196,6 +198,7 @@ class Home extends Component {
                   hitsPerPage: this.state.hitsPerPage,
                 }}
                 movies={this.state.movies}
+                isInitialLoad={this.state.isInitialLoad}
                 deletingMovieId={this.state.deletingMovieId}
                 deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
               <Pagination
