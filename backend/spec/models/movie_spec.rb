@@ -5,7 +5,9 @@ RSpec.describe Movie, type: :model do
   it { is_expected.to have_timestamps.for(:creating) }
   it { is_expected.to have_timestamps.for(:updating) }
 
-  # Ensure title and year are present before saving
+  # Ensure title, year, genre and rating are present before saving
   it { is_expected.to validate_presence_of(:title) }
   it { is_expected.to validate_presence_of(:year) }
+  it { is_expected.to validate_presence_of(:genre) }
+  it { is_expected.to validate_presence_of(:rating) }
 end

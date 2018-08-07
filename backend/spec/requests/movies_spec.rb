@@ -5,25 +5,10 @@ RSpec.describe 'Movies API', type: :request do
   let!(:movies) { create_list(:movie, 10) }
   let(:movie_id) { movies.first.id }
 
-  # Test suite for GET /api/v1/movies
-  describe 'GET /api/v1/movies' do
-    # Make the HTTP request before each test
-    before { get '/api/v1/movies' }
-
-    it 'returns all movies' do
-      expect(json).not_to be_empty
-      expect(json.size).to eq(10)
-    end
-
-    it 'responds with status code 200' do
-      expect(response).to have_http_status(200)
-    end
-  end
-
   # Test suite for POST /api/v1/movies
   describe 'POST /api/v1/movies' do
     # Valid request payload
-    let(:valid_payload) { { title: 'Return of the King', year: 1992 } }
+    let(:valid_payload) { { title: 'Return of the King', year: 1992, genre: 'fantasy, action', rating: 5 } }
 
     context 'when the request is valid' do
       # Make the HTTP request with valid payload before each test
