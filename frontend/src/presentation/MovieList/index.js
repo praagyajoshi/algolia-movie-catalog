@@ -11,16 +11,55 @@ class MovieList extends Component {
     this.props.deleteMovieCallback(this.props.movie.objectID);
   }
 
-  getCastList() {
-    const movie = this.props.movie;
+  getTitle() {
+    const highlightResult = this.props.movie._highlightResult;
 
-    if (movie.actors.length > 5) {
-      const remainingCount = movie.actors.length - 5;
-      const remainingPronoun = remainingCount > 1 ? 'others' : 'other';
-      return movie.actors.slice(0, 5).join(', ') + `, and ${remainingCount} ${remainingPronoun}`;
-    } else {
-      return movie.actors.join(', ');
+    return { __html: highlightResult.title.value};
+  }
+
+  getCastList() {
+    let actors = this.props.movie._highlightResult.actors;
+    let remainingPostfix = '';
+    let actorsHtml = '';
+    let actorsArray = [];
+
+    if (!actors) {
+      return { __html: actorsHtml };
     }
+
+    // Checking if there's any actor who has been highlighted
+    const highlightFound = actors.some(actor => {
+      return (actor.matchedWords.length > 0);
+    });
+
+    if (!highlightFound) {
+      /**
+       * If no highlight was found, then use the actors attribute
+       * instead of the _highlightResult.actors attribute
+       */
+      actorsArray = this.props.movie.actors;
+    } else {
+      /**
+       * If a highlight was found, then sort the actors array on
+       * the basis of number of words which were matched. This is
+       * done to ensure that a highlighted name is always shown
+       * in the results.
+       */
+      actors.sort((a, b) => { return (b.matchedWords.length - a.matchedWords.length) });
+      actorsArray = actors.map((actor) => { return actor.value });
+    }
+
+    // Not showing more than 5 actors at a time
+    if (actorsArray.length > 5) {
+      const remainingCount = actorsArray.length - 5;
+      remainingPostfix = ' and ' + remainingCount;
+      remainingPostfix += remainingCount > 1 ? ' others' : ' other';
+      actorsArray = actorsArray.slice(0, 5);
+    }
+
+    actorsHtml = actorsArray.join(', ') + remainingPostfix;
+
+    return { __html: actorsHtml };
   }
 
   getMovieImage() {
@@ -74,9 +113,9 @@ class MovieList extends Component {
 
               <div className="top-content">
                 <div>
-                  <h5 className="title movie-title is-5">
-                    {movie.title}
-                  </h5>
+                  <h5
+                    className="title movie-title is-5"
+                    dangerouslySetInnerHTML={this.getTitle()} />
                   <div className="movie-info">
                     {movie.year}&nbsp;&middot;&nbsp;
                     {movie.genre && movie.genre.join(', ')}
@@ -88,9 +127,7 @@ class MovieList extends Component {
                 </div>
 
                 <div className="movie-cast-container">
-                  <div className="movie-cast">
-                    {this.getCastList()}
-                  </div>
+                  <div className="movie-cast" dangerouslySetInnerHTML={this.getCastList()} />
                 </div>
               </div>
 
