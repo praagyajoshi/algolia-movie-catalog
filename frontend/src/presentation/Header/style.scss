@@ -23,6 +23,13 @@
       .title {
         color: #FFFFFF;
         text-shadow: 0px 1px 6px rgba(0, 0, 0, 0.9);
+        -webkit-transition: text-shadow 0.25s ease-out;
+        -moz-transition: text-shadow 0.25s ease-out;
+        transition: text-shadow 0.25s ease-out;
+
+        &:hover {
+          text-shadow: 0px 1px 8px rgba(255, 255, 255, 0.8);
+        }
       }
 
       @include mobile {
