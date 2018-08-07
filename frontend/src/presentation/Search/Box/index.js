@@ -41,7 +41,11 @@ class SearchBox extends Component {
   }
 
   handleCallback(searchValue) {
-    this.props.onChangeQ(searchValue.trim());
+    // Unsetting the page number when changing the query
+    this.props.onChangeUrlQueryParams({
+      q: searchValue.trim(),
+      page: null
+    });
   }
 
   render() {
@@ -64,7 +68,7 @@ class SearchBox extends Component {
 
 SearchBox.propTypes = {
   q: PropTypes.string,
-  onChangeQ: PropTypes.func
+  onChangeUrlQueryParams: PropTypes.func
 }
 
 export default addUrlProps({ urlPropsQueryConfig })(SearchBox);
