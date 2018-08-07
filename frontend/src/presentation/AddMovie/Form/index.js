@@ -132,18 +132,13 @@ class AddMovieForm extends Component {
       return;
     }
 
-    // TODO: move trim to the backend
-    const actorsArray = this.state.actors.trim().split(/\s*,\s*/);
-    const altTitlesArray = this.state.alternativeTitles.trim().split(/\s*,\s*/);
-    const genreArray = this.state.genre.trim().split(/\s*,\s*/);
-
     const formData = {
       title: this.state.title,
       year: this.state.year,
-      actors: actorsArray.join(','),
-      genre: genreArray.join(','),
+      actors: this.state.actors,
+      genre: this.state.genre,
       rating: this.state.rating,
-      alternative_titles: altTitlesArray.join(','),
+      alternative_titles: this.state.alternativeTitles,
       uploaded_image: this.state.imageFile
     };
     this.props.submitClickCallback(formData);

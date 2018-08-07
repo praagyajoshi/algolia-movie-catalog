@@ -5,7 +5,7 @@ import './style.css';
 class Header extends Component {
   render() {
     return (
-      <section className="hero hero-header">
+      <section className="hero hero-header is-dark">
 
         <div className="hero-body">
           <div className="header-content container">
