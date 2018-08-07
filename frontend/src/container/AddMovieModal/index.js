@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ClassNames from 'classnames';
 
+import ModalContainer from '../../presentation/ModalContainer';
 import AddMovieForm from '../../presentation/AddMovieForm';
 import ModalBodyNotification from '../../presentation/ModalBodyNotification';
 
@@ -43,8 +43,7 @@ class AddMovieModal extends Component {
     });
   }
 
-  handleCloseClick(e) {
-    e.preventDefault();
+  handleCloseClick() {
     this.props.closeButtonClickCallback();
   }
 
@@ -93,37 +92,23 @@ class AddMovieModal extends Component {
   }
 
   render() {
-    const modalClasses = ClassNames({
-      'modal': true,
-      'is-active': this.state.isActive
-    });
-
     return (
-      <div className={modalClasses}>
-        <div className="modal-background" onClick={(e) => this.handleCloseClick(e)}></div>
-        <div className="modal-card">
-          <header className="modal-card-head">
-            <p className="modal-card-title">Add movie</p>
-            <button
-              className="delete"
-              aria-label="close"
-              onClick={(e) => this.handleCloseClick(e)}>
-            </button>
-          </header>
+      <ModalContainer
+        title="Add movie"
+        isActive={this.state.isActive}
+        closeCallback={() => this.handleCloseClick()}>
 
-          <section className="modal-card-body">
-            <AddMovieForm
-              clearState={this.state.saveSuccessful}
-              isProcessing={this.state.isProcessing}
-              submitClickCallback={(formData) => this.onFormSubmit(formData)}
-              cancelClickCallback={() => this.onFormCancel()} />
+        <AddMovieForm
+          clearState={this.state.saveSuccessful}
+          isProcessing={this.state.isProcessing}
+          submitClickCallback={(formData) => this.onFormSubmit(formData)}
+          cancelClickCallback={() => this.onFormCancel()} />
 
-            { this.state.saveSuccessful &&
-              <ModalBodyNotification message="Movie saved successfully!" />
-            }
-          </section>
-        </div>
-      </div>
+        {this.state.saveSuccessful &&
+          <ModalBodyNotification message="Movie saved successfully!" />
+        }
+
+      </ModalContainer>
     );
   }
 }
