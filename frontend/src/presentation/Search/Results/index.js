@@ -7,7 +7,7 @@ class SearchResults extends Component {
   getCounters() {
     const counters = this.props.counters;
     const resultsCount = counters.resultsCount;
-    var endNumber = counters.hitsPerPage * (counters.pageNumber + 1);
+    var endNumber = counters.hitsPerPage * counters.pageNumber;
     const startNumber = endNumber - (counters.hitsPerPage - 1);
 
     if (endNumber > resultsCount) {

@@ -29,9 +29,9 @@ class Home extends Component {
       movies: [],
       facets: {},
       facetFilters: [],
+      page: 0,
       resultsCount: 0,
       pageCount: 0,
-      pageNumber: 0,
       hitsPerPage: 0,
       deletingMovieId: '',
       showAddMovieModal: false,
@@ -40,7 +40,11 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.buildFacetFilters(nextProps.rating, nextProps.genre);
+    this.buildSearchFilters(
+      nextProps.rating,
+      nextProps.genre,
+      nextProps.page
+    );
   }
 
   componentDidMount() {
@@ -48,10 +52,14 @@ class Home extends Component {
      * Build facet filters based on the URL, and fetch movies
      * from the search provider on initial page load.
      */
-    this.buildFacetFilters(this.props.rating, this.props.genre);
+    this.buildSearchFilters(
+      this.props.rating,
+      this.props.genre,
+      this.props.page
+    );
   }
 
-  buildFacetFilters(rating, genre) {
+  buildSearchFilters(rating, genre, page) {
     let filters = [];
     let ratingFilters = [];
 
@@ -82,27 +90,30 @@ class Home extends Component {
     }
 
     this.setState({
-      facetFilters: filters
-    }, () => this.searchMovies(this.state.searchQuery));
+      facetFilters: filters,
+      page
+    }, () => this.executeSearch(this.state.searchQuery));
   }
 
   searchValueUpdated(newValue) {
-    this.searchMovies(newValue);
+    this.executeSearch(newValue);
   }
 
-  searchMovies(query, pageNumber = 0) {
+  executeSearch(query) {
     searchMovies(
       query,
-      pageNumber,
+      (this.state.page - 1),
       this.state.facetFilters,
       (error, content) => {
+        // TODO: catch error
+
         /**
          * If no facets were returned, then insert
          * the keys with empty values so that we can
          * render the title of the facet filters at least.
          */
         let facets = content.facets;
-        if (Object.keys(facets).length === 0) {
+        if (!facets || Object.keys(facets).length === 0) {
           facets = {
             [FACET_GENRE]: {},
             [FACET_RATING]: {}
@@ -114,17 +125,13 @@ class Home extends Component {
           movies: content.hits,
           resultsCount: content.nbHits,
           pageCount: content.nbPages,
-          pageNumber: content.page,
+          page: (content.page + 1),
           hitsPerPage: content.hitsPerPage,
           facets: facets,
           isInitialLoad: false
         });
       }
     );
-  }
-
-  jumpToPage(pageNumber) {
-    this.searchMovies(this.state.searchQuery, pageNumber);
   }
 
   showAddMovieModal() {
@@ -190,7 +197,7 @@ class Home extends Component {
               <MovieResults
                 counters={{
                   resultsCount: this.state.resultsCount,
-                  pageNumber: this.state.pageNumber,
+                  pageNumber: this.state.page,
                   hitsPerPage: this.state.hitsPerPage,
                 }}
                 movies={this.state.movies}
@@ -198,9 +205,8 @@ class Home extends Component {
                 deletingMovieId={this.state.deletingMovieId}
                 deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
               <Pagination
-                currentPage={this.state.pageNumber}
-                totalPageCount={this.state.pageCount}
-                pageNumberSelectedCallback={(pageNumber) => this.jumpToPage(pageNumber)} />
+                currentPage={this.state.page}
+                totalPageCount={this.state.pageCount} />
             </div>
           } />
 
@@ -215,8 +221,10 @@ class Home extends Component {
 Home.propTypes = {
   genre: PropTypes.array,
   rating: PropTypes.number,
+  page: PropTypes.number,
   onChangeGenre: PropTypes.func,
   onChangeRating: PropTypes.func,
+  onChangePage: PropTypes.func,
   onChangeUrlQueryParams: PropTypes.func
 }
 

@@ -1,28 +1,34 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
+import { addUrlProps } from 'react-url-query';
+
+import { urlPropsQueryConfig } from '../../dataProviders/urlState';
 
 import './style.css';
 
 class Pagination extends Component {
+  componentWillReceiveProps(nextProps) {
+    console.log('new page = ' + nextProps.currentPage);
+  }
+
   onPageNumberClick(pageNumber, e) {
     e.preventDefault();
-    this.props.pageNumberSelectedCallback(pageNumber - 1);
+    this.props.onChangePage(pageNumber);
   }
 
   onPreviousClick() {
     if (this.props.currentPage > 0) {
-      this.props.pageNumberSelectedCallback(this.props.currentPage - 1);
+      this.props.onChangePage(this.props.currentPage - 1);
     }
   }
 
   onNextClick() {
-    this.props.pageNumberSelectedCallback(this.props.currentPage + 1);
+    this.props.onChangePage(this.props.currentPage + 1);
   }
 
   getPageNumbersToRender() {
     const { currentPage, totalPageCount } = this.props;
-    const currentPageValue = currentPage + 1;
     let startPage, endPage;
 
     /**
@@ -40,7 +46,7 @@ class Pagination extends Component {
       startPage = 1;
       endPage = totalPageCount;
     } else {
-      if (currentPageValue <= 3) {
+      if (currentPage <= 3) {
         /**
          * If we're close to the first page, then show
          * the first 5 pages.
@@ -49,7 +55,7 @@ class Pagination extends Component {
         endPage = 5;
 
         includeLastPage = true;
-      } else if (currentPageValue + 2 >= totalPageCount) {
+      } else if (currentPage + 2 >= totalPageCount) {
         /**
          * If we're close to the last page, then show
          * the last 5 pages.
@@ -63,8 +69,8 @@ class Pagination extends Component {
          * If not close to either the first or last page,
          * then show the neighbouring 2 pages on each side.
          */
-        startPage = currentPageValue - 2;
-        endPage = currentPageValue + 2;
+        startPage = currentPage - 2;
+        endPage = currentPage + 2;
 
         includeFirstPage = true;
         includeLastPage = true;
@@ -113,7 +119,7 @@ class Pagination extends Component {
 
     const linkClasses = ClassNames({
       "pagination-link": true,
-      "is-current": (this.props.currentPage === (page - 1))
+      "is-current": (this.props.currentPage === page)
     });
 
     return (
@@ -142,14 +148,14 @@ class Pagination extends Component {
             <a
               className="pagination-previous is-disabled"
               onClick={(e) => this.onPreviousClick(e)}
-              disabled={(currentPage === 0)} >
+              disabled={(currentPage === 1)} >
               Previous
             </a>
 
             <a
               className="pagination-next"
               onClick={(e) => this.onNextClick(e)}
-              disabled={(currentPage === (totalPageCount - 1))} >
+              disabled={(currentPage === totalPageCount)} >
               Next page
             </a>
 
@@ -166,7 +172,8 @@ class Pagination extends Component {
 Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired,
   totalPageCount: PropTypes.number.isRequired,
-  pageNumberSelectedCallback: PropTypes.func.isRequired
+  page: PropTypes.number,
+  onChangePage: PropTypes.func
 }
 
-export default Pagination;
+export default addUrlProps({ urlPropsQueryConfig })(Pagination);
