@@ -17,7 +17,7 @@ class Movie
   field :genre, type: Array
 
   # Validations
-  validates_presence_of :title, :year
+  validates_presence_of :title, :year, :genre, :rating
 
   # Image uploader
   mount_uploader :uploaded_image, ImageUploader
@@ -32,9 +32,8 @@ class Movie
       self.uploaded_image.url
     end
 
-    # Making actors attribute unordered because it doesn't matter
-    # which actor was matched
-    searchableAttributes ['title', 'alternative_titles', 'actors', 'year']
+    # Defining attributes which will be searchabhe
+    searchableAttributes ['title', 'actors', 'alternative_titles', 'year']
 
     # Ranking search results based on score
     customRanking ['desc(score)']
