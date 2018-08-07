@@ -7,8 +7,8 @@ class ImageUploader < CarrierWave::Uploader::Base
   storage :file
   # storage :fog
 
-  # Set the asset host
-  asset_host 'http://localhost:8080'
+  # Set the asset host to construct correct URLs of the uploaded images
+  asset_host ENV['SERVER_HOST']
 
   # Override the directory where uploaded files will be stored.
   # This is a sensible default for uploaders that are meant to be mounted:

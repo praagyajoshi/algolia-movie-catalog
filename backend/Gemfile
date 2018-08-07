@@ -5,14 +5,22 @@ ruby '2.5.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.0'
+
 # Use Puma as the app server
 gem 'puma', '~> 3.11'
+
+# Use dotenv to load configuration from env files
+gem 'dotenv-rails', groups: [:development, :test]
+
 # Use MongoDB
 gem 'mongoid', '~> 7.0'
+
 # Use Algolia search
 gem 'algoliasearch-rails'
+
 # Use Carrierwave for image upload
 gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+
 # Use kaminari for pagination
 gem 'kaminari-mongoid'
 
