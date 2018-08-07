@@ -2,12 +2,6 @@ module Api::V1
   class MoviesController < ApiController
     before_action :set_movie, only: [:destroy]
 
-    # GET /movies
-    def index
-      @movies = Movie.page(params[:page]).per(20)
-      json_response(@movies)
-    end
-
     # POST /movies
     def create
       @movie = Movie.create!(movie_params)
@@ -23,12 +17,25 @@ module Api::V1
     private
 
     def movie_params
-      params[:alternative_titles] = params[:alternative_titles].split(',')
-      params[:actors] = params[:actors].split(',')
-      params[:genre] = params[:genre].split(',')
+      # Accepting comma separated strings for the following params
+      # and also trimming whitespace from each element
+      if params.key?(:alternative_titles)
+        params[:alternative_titles] = params[:alternative_titles].split(',')
+        params[:alternative_titles] = params[:alternative_titles].collect {|x| x.strip}
+      end
 
-      # Whitelist params
-      # TODO: add other params as well
+      if params.key?(:actors)
+        params[:actors] = params[:actors].split(',')
+        params[:actors] = params[:actors].collect {|x| x.strip}
+        logger.error params[:actors]
+      end
+
+      if params.key?(:genre)
+        params[:genre] = params[:genre].split(',')
+        params[:genre] = params[:genre].collect {|x| x.strip}
+      end
+
+      # Whitelisting only the following params
       params.permit(
         :title,
         { alternative_titles: [] },
