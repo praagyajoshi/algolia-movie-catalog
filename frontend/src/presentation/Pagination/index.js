@@ -23,51 +23,109 @@ class Pagination extends Component {
   getPageNumbersToRender() {
     const { currentPage, totalPageCount } = this.props;
     const currentPageValue = currentPage + 1;
-    var startPage, endPage;
+    let startPage, endPage;
 
-    // TODO: refactor and reduce to 5 pages
-    if (totalPageCount <= 10) {
-      // less than 10 total pages so show all
+    /**
+     * Flags to decide whether we should explicitly
+     * include the first or last page.
+     */
+    let includeFirstPage = false;
+    let includeLastPage = false;
+
+    /**
+     * If we have <= 5 pages to display, then just show
+     * all of them.
+     */
+    if (totalPageCount <= 5) {
       startPage = 1;
       endPage = totalPageCount;
     } else {
-      // more than 10 total pages so calculate start and end pages
-      if (currentPageValue <= 6) {
+      if (currentPageValue <= 3) {
+        /**
+         * If we're close to the first page, then show
+         * the first 5 pages.
+         */
         startPage = 1;
-        endPage = 10;
-      } else if (currentPageValue + 4 >= totalPageCount) {
-        startPage = totalPageCount - 9;
+        endPage = 5;
+
+        includeLastPage = true;
+      } else if (currentPageValue + 2 >= totalPageCount) {
+        /**
+         * If we're close to the last page, then show
+         * the last 5 pages.
+         */
+        startPage = totalPageCount - 4;
         endPage = totalPageCount;
+
+        includeFirstPage = true;
       } else {
-        startPage = currentPageValue - 5;
-        endPage = currentPageValue + 4;
+        /**
+         * If not close to either the first or last page,
+         * then show the neighbouring 2 pages on each side.
+         */
+        startPage = currentPageValue - 2;
+        endPage = currentPageValue + 2;
+
+        includeFirstPage = true;
+        includeLastPage = true;
       }
     }
 
-    return [...Array((endPage + 1) - startPage).keys()].map(i => startPage + i);
+    let pagesArray = [...Array((endPage + 1) - startPage).keys()].map(i => startPage + i);
+    return { includeFirstPage, includeLastPage, pagesArray };
   }
 
   getPaginationList() {
-    const pageList = this.getPageNumbersToRender();
+    const { includeFirstPage, includeLastPage, pagesArray } = this.getPageNumbersToRender();
+    let renderArray = []
 
-    // TODO: Add first and last links as well
-    return pageList.map((page) => {
-      const linkClasses = ClassNames({
-        "pagination-link": true,
-        "is-current": (this.props.currentPage === (page - 1))
-      });
-
-      return (
-        <li key={"page-number-" + page}>
-          <a
-            className={linkClasses}
-            aria-label={"Goto page " + page}
-            onClick={(e) => this.onPageNumberClick(page, e)}>
-            {page}
-          </a>
-        </li>
-      );
+    renderArray = pagesArray.map((page) => {
+      return this.getPaginationLink(page);
     });
+
+    /**
+     * Adding the first page along with
+     * an ellipsis element.
+     */
+    if (includeFirstPage) {
+      renderArray.unshift(this.getPaginationLink(0, true, 'first-page-ellipsis'));
+      renderArray.unshift(this.getPaginationLink(1));
+    }
+
+    /**
+     * Adding the last page along with
+     * an ellipsis element.
+     */
+    if (includeLastPage) {
+      renderArray.push(this.getPaginationLink(0, true, 'last-page-ellipsis'));
+      renderArray.push(this.getPaginationLink(this.props.totalPageCount));
+    }
+
+    return renderArray;
+  }
+
+  getPaginationLink(page, isEllipsis = false, ellipsisKey = '') {
+    if (isEllipsis) {
+      return (
+        <li key={ellipsisKey}><span className="pagination-ellipsis">&hellip;</span></li>
+      );
+    }
+
+    const linkClasses = ClassNames({
+      "pagination-link": true,
+      "is-current": (this.props.currentPage === (page - 1))
+    });
+
+    return (
+      <li key={"page-number-" + page}>
+        <a
+          className={linkClasses}
+          aria-label={"Goto page " + page}
+          onClick={(e) => this.onPageNumberClick(page, e)}>
+          {page}
+        </a>
+      </li>
+    );
   }
 
   render() {
