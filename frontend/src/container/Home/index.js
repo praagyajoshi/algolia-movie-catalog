@@ -40,24 +40,28 @@ class Home extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    const { rating, genre, page, q } = nextProps;
+
     this.buildSearchFilters(
-      nextProps.rating,
-      nextProps.genre,
-      nextProps.page ? nextProps.page : 1,
-      nextProps.q ? nextProps.q : ''
+      rating,
+      genre,
+      page && page > 0 ? page : 1,
+      q ? q : ''
     );
   }
 
   componentDidMount() {
+    const { rating, genre, page, q } = this.props;
+
     /**
      * Build facet filters based on the URL, and fetch movies
      * from the search provider on initial page load.
      */
     this.buildSearchFilters(
-      this.props.rating,
-      this.props.genre,
-      this.props.page ? this.props.page : 1,
-      this.props.q ? this.props.q : ''
+      rating,
+      genre,
+      page && page > 0 ? page : 1,
+      q ? q : ''
     );
   }
 

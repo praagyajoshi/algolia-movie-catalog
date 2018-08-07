@@ -73,7 +73,7 @@ class MovieList extends Component {
       movieImageUrl = movie.uploaded_image;
     }
 
-    if (movie.color) {
+    if (movie.color && movie.color.length) {
       backgroundColor = movie.color;
     }
 

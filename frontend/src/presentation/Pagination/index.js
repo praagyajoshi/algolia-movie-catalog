@@ -14,7 +14,7 @@ class Pagination extends Component {
   }
 
   onPreviousClick() {
-    if (this.props.currentPage > 0) {
+    if (this.props.currentPage > 1) {
       this.props.onChangePage(this.props.currentPage - 1);
     }
   }
@@ -141,19 +141,19 @@ class Pagination extends Component {
       <div className="field pagination-field">
         <div className="control">
           <nav className="pagination is-centered is-rounded" aria-label="pagination">
-            <a
+            <button
               className="pagination-previous is-disabled"
               onClick={(e) => this.onPreviousClick(e)}
               disabled={(currentPage === 1)} >
               Previous
-            </a>
+            </button>
 
-            <a
+            <button
               className="pagination-next"
               onClick={(e) => this.onNextClick(e)}
               disabled={(currentPage === totalPageCount)} >
               Next page
-            </a>
+            </button>
 
             <ul className="pagination-list">
               {this.getPaginationList()}
