@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import ModalContainer from '../../presentation/ModalContainer';
-import AddMovieForm from '../../presentation/AddMovieForm';
-import ModalBodyNotification from '../../presentation/ModalBodyNotification';
+import ModalHolder from '../../presentation/Modal/Holder';
+import AddMovieForm from '../../presentation/AddMovie/Form';
+import ModalBodyNotification from '../../presentation/Modal/Notification';
 
 import { addMovieAPI } from '../../dataProviders/API';
 
@@ -93,7 +93,7 @@ class AddMovieModal extends Component {
 
   render() {
     return (
-      <ModalContainer
+      <ModalHolder
         title="Add movie"
         isActive={this.state.isActive}
         closeCallback={() => this.handleCloseClick()}>
@@ -108,7 +108,7 @@ class AddMovieModal extends Component {
           <ModalBodyNotification message="Movie saved successfully!" />
         }
 
-      </ModalContainer>
+      </ModalHolder>
     );
   }
 }

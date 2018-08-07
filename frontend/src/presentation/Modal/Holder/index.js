@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 
-class ModalContainer extends Component {
+class ModalHolder extends Component {
   onCloseClick(e) {
     e.preventDefault();
     this.props.closeCallback();
@@ -38,10 +38,10 @@ class ModalContainer extends Component {
   }
 }
 
-ModalContainer.propTypes = {
+ModalHolder.propTypes = {
   title: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
   closeCallback: PropTypes.func.isRequired
 }
 
-export default ModalContainer;
+export default ModalHolder;

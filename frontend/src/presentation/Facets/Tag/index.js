@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 
-import { FACET_RATING } from '../../constants/facets';
+import { FACET_RATING } from '../../../constants/facets';
 
 import './style.css';
 

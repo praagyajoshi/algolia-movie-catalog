@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import SearchResults from '../../presentation/SearchResults';
+import SearchResults from '../../presentation/Search/Results';
 import MovieList from '../../presentation/MovieList';
 import NoResult from '../../presentation/NoResult';
 

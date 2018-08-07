@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import { FACET_GENRE, FACET_RATING } from '../../constants/facets';
+import { FACET_GENRE, FACET_RATING } from '../../../constants/facets';
 
-import FacetTagGroup from '../../presentation/FacetTagGroup'
-import FacetTag from '../../presentation/FacetTag';
+import FacetTag from '../../../presentation/Facets/Tag';
+import FacetTagGroup from '../../../presentation/Facets/TagGroup'
 
 class FacetGroup extends Component {
   toggleSelectionCallback(value) {

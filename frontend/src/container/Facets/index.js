@@ -4,7 +4,7 @@ import { addUrlProps, UrlQueryParamTypes, UrlUpdateTypes } from 'react-url-query
 
 import { FACET_GENRE, FACET_RATING } from '../../constants/facets';
 
-import FacetGroup from '../FacetGroup';
+import FacetGroup from './FacetGroup';
 
 // TODO: move to a constants file?
 const urlPropsQueryConfig = {

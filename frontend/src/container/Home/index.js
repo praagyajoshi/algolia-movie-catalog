@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { addUrlProps, UrlQueryParamTypes, UrlUpdateTypes } from 'react-url-query';
 
-import SearchBox from '../../presentation/SearchBox';
-import AddMovieButton from '../../presentation/AddMovieButton';
+import SearchBox from '../../presentation/Search/Box';
+import SearchPage from '../../presentation/Search/Page';
+
+import AddMovieButton from '../../presentation/AddMovie/Button';
 import Header from '../../presentation/Header';
 import TwoColumnLayout from '../../presentation/TwoColumnLayout';
 import Pagination from '../../presentation/Pagination';
-import SearchPage from '../../presentation/SearchPage';
 
 import Facets from '../Facets';
 import MovieResults from '../MovieResults';
