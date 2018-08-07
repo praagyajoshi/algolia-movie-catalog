@@ -8,7 +8,7 @@ class Header extends Component {
       <section className="hero hero-header">
 
         <div className="hero-body">
-          <div className="header-content">
+          <div className="header-content container">
             <div className="columns">
               <div className="column is-half">
                 <a href="/">
@@ -19,7 +19,7 @@ class Header extends Component {
                   </h3>
                 </a>
               </div>
-              <div className="column is-half">
+              <div className="column">
                 {this.props.children}
               </div>
             </div>

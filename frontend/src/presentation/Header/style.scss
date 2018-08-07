@@ -12,17 +12,13 @@
   }
 
   .hero-body {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-
     min-height: 200px;
     background-color: rgba(20, 20, 20, 0.6);
 
     .header-content {
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto;
+      .columns {
+        margin: 1.5rem 0;
+      }
 
       .title {
         color: #FFFFFF;
