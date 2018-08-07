@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { addUrlProps, UrlQueryParamTypes, UrlUpdateTypes } from 'react-url-query';
+import { addUrlProps } from 'react-url-query';
 
 import SearchBox from '../../presentation/Search/Box';
 import SearchPage from '../../presentation/Search/Page';
@@ -18,12 +18,7 @@ import { FACET_GENRE, FACET_RATING } from '../../constants/facets';
 
 import { deleteMovieAPI } from '../../dataProviders/API';
 import { searchMovies } from '../../dataProviders/search';
-
-// TODO: move to a constants file?
-const urlPropsQueryConfig = {
-  genre: { type: UrlQueryParamTypes.array, updateType: UrlUpdateTypes.pushIn },
-  rating: { type: UrlQueryParamTypes.number, updateType: UrlUpdateTypes.pushIn }
-}
+import { urlPropsQueryConfig } from '../../dataProviders/urlState';
 
 class Home extends Component {
 

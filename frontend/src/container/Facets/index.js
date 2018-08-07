@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { addUrlProps, UrlQueryParamTypes, UrlUpdateTypes } from 'react-url-query';
+import { addUrlProps } from 'react-url-query';
 
 import { FACET_GENRE, FACET_RATING } from '../../constants/facets';
 
-import FacetGroup from './FacetGroup';
+import { urlPropsQueryConfig } from '../../dataProviders/urlState';
 
-// TODO: move to a constants file?
-const urlPropsQueryConfig = {
-  genre: { type: UrlQueryParamTypes.array, updateType: UrlUpdateTypes.pushIn },
-  rating: { type: UrlQueryParamTypes.number, updateType: UrlUpdateTypes.pushIn }
-}
+import FacetGroup from './FacetGroup';
 
 class Facets extends Component {
   constructor(props) {
