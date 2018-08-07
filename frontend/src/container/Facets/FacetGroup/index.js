@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { FACET_GENRE, FACET_RATING } from '../../../constants/facets';
 
+import { capitaliseWord } from '../../../utils/string';
+
 import FacetTag from '../../../presentation/Facets/Tag';
 import FacetTagGroup from '../../../presentation/Facets/TagGroup'
 
@@ -37,8 +39,6 @@ class FacetGroup extends Component {
           isActive = this.props.facetsActive.includes(key.toLowerCase());
         }
 
-        // TODO: sort alphabetically for rating
-        // TODO: always make sure 3, 4, and 5+ are available?
         renderArray.push(
           <FacetTag
             key={tagElementKey}
@@ -55,13 +55,11 @@ class FacetGroup extends Component {
   }
 
   render() {
-    // TODO: move to util function
-    const type = this.props.facetType;
-    const capitalizedGroupName = type.charAt(0).toUpperCase() + type.slice(1);
+    const groupName = capitaliseWord(this.props.facetType);
 
     return (
       <FacetTagGroup
-        groupName={capitalizedGroupName}
+        groupName={groupName}
         resetFiltersCallback={() => this.resetFilters()}>
         {this.getTags()}
       </FacetTagGroup>

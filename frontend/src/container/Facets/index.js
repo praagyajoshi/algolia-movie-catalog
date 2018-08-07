@@ -87,6 +87,25 @@ class Facets extends Component {
     const facets = this.state.facets;
     var renderArray = [];
 
+    const currentRatingFacet = (facets.hasOwnProperty(FACET_RATING) && facets[FACET_RATING]) ?
+      facets[FACET_RATING] : {};
+    var newRatingFacet = {};
+    let countValue = 0;
+
+    /**
+     * Adding up the facet counts for ratings so that we can display
+     * the correct counts, as we want to filter on "3 starts and above"
+     * instead of "3 stars".
+     */
+    for (let i = 5; i >= 1; i--) {
+      if (currentRatingFacet.hasOwnProperty(i) && currentRatingFacet[i]) {
+        countValue += currentRatingFacet[i];
+        newRatingFacet[i] = countValue;
+      }
+    }
+
+    facets[FACET_RATING] = newRatingFacet;
+
     /**
      * Rendering groups of facets individually
      * Facets are in the format:

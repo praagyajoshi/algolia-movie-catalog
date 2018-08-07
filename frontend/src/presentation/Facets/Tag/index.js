@@ -14,7 +14,7 @@ class FacetTag extends Component {
 
   render() {
     const isRating = (this.props.facetType === FACET_RATING);
-    const postfix = isRating ? ' and above' : '';
+    const postfix = isRating && (parseInt(this.props.name, 10) !== 5) ? ' and above' : '';
 
     const tagClassNames = ClassNames({
       'facet-tag': true,
