@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { addUrlProps } from 'react-url-query';
 
 import debounce from '../../../utils/debounce';
+
+import { urlPropsQueryConfig } from '../../../dataProviders/urlState';
 
 import './style.css';
 
@@ -12,6 +15,14 @@ class SearchBox extends Component {
       searchValue: ''
     };
     this.debouncedHandleCallback = debounce(this.handleCallback, 250);
+  }
+
+  componentDidMount() {
+    if (this.props.q && this.props.q.length) {
+      this.setState({
+        searchValue: this.props.q
+      });
+    }
   }
 
   handleChange(event) {
@@ -30,7 +41,7 @@ class SearchBox extends Component {
   }
 
   handleCallback(searchValue) {
-    this.props.valueChangeCallback(searchValue.trim());
+    this.props.onChangeQ(searchValue.trim());
   }
 
   render() {
@@ -52,7 +63,8 @@ class SearchBox extends Component {
 }
 
 SearchBox.propTypes = {
-  valueChangeCallback: PropTypes.func.isRequired
+  q: PropTypes.string,
+  onChangeQ: PropTypes.func
 }
 
-export default SearchBox;
+export default addUrlProps({ urlPropsQueryConfig })(SearchBox);

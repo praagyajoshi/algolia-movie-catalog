@@ -25,7 +25,7 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchQuery: '',
+      q: '',
       movies: [],
       facets: {},
       facetFilters: [],
@@ -43,7 +43,8 @@ class Home extends Component {
     this.buildSearchFilters(
       nextProps.rating,
       nextProps.genre,
-      nextProps.page
+      nextProps.page ? nextProps.page : 1,
+      nextProps.q ? nextProps.q : ''
     );
   }
 
@@ -55,11 +56,12 @@ class Home extends Component {
     this.buildSearchFilters(
       this.props.rating,
       this.props.genre,
-      this.props.page
+      this.props.page ? this.props.page : 1,
+      this.props.q ? this.props.q : ''
     );
   }
 
-  buildSearchFilters(rating, genre, page) {
+  buildSearchFilters(rating, genre, page, q) {
     let filters = [];
     let ratingFilters = [];
 
@@ -91,21 +93,21 @@ class Home extends Component {
 
     this.setState({
       facetFilters: filters,
-      page
-    }, () => this.executeSearch(this.state.searchQuery));
+      page,
+      q
+    }, () => this.executeSearch());
   }
 
-  searchValueUpdated(newValue) {
-    this.executeSearch(newValue);
-  }
-
-  executeSearch(query) {
+  executeSearch() {
     searchMovies(
-      query,
+      this.state.q,
       (this.state.page - 1),
       this.state.facetFilters,
       (error, content) => {
-        // TODO: catch error
+        if (error) {
+          alert('Oops, something went wrong! Please try again.');
+          return;
+        }
 
         /**
          * If no facets were returned, then insert
@@ -121,7 +123,6 @@ class Home extends Component {
         }
 
         this.setState({
-          searchQuery: query,
           movies: content.hits,
           resultsCount: content.nbHits,
           pageCount: content.nbPages,
@@ -192,8 +193,7 @@ class Home extends Component {
           }
           right={
             <div>
-              <SearchBox
-                valueChangeCallback={(value) => this.searchValueUpdated(value)} />
+              <SearchBox />
               <MovieResults
                 counters={{
                   resultsCount: this.state.resultsCount,
@@ -222,9 +222,11 @@ Home.propTypes = {
   genre: PropTypes.array,
   rating: PropTypes.number,
   page: PropTypes.number,
+  q: PropTypes.string,
   onChangeGenre: PropTypes.func,
   onChangeRating: PropTypes.func,
   onChangePage: PropTypes.func,
+  onChangeQ: PropTypes.func,
   onChangeUrlQueryParams: PropTypes.func
 }
 

@@ -8,10 +8,6 @@ import { urlPropsQueryConfig } from '../../dataProviders/urlState';
 import './style.css';
 
 class Pagination extends Component {
-  componentWillReceiveProps(nextProps) {
-    console.log('new page = ' + nextProps.currentPage);
-  }
-
   onPageNumberClick(pageNumber, e) {
     e.preventDefault();
     this.props.onChangePage(pageNumber);
