@@ -37,6 +37,7 @@ class Home extends Component {
       pageCount: 0,
       pageNumber: 0,
       hitsPerPage: 0,
+      deletingMovieId: '',
       showAddMovieModal: false
     }
   }
@@ -57,14 +58,24 @@ class Home extends Component {
     let filters = [];
     let ratingFilters = [];
 
-    // Build filters for genre
+    /**
+     * Build filters for genre.
+     * Each genre filter as pushed individually
+     * in the array as "genre:<genre-name>" to
+     * signify an AND relationship between them.
+     */
     if (genre) {
       genre.forEach(selectedGenre => {
         filters.push("genre:" + selectedGenre);
       });
     }
 
-    // Build filters for rating
+    /**
+     * Build filter for rating.
+     * Starting from the selected rating, going up
+     * till 5, each rating is pushed as one array
+     * to signify an OR relationship between them.
+     */
     if (rating) {
       for (let i = rating; i <= 5; i++) {
         ratingFilters.push("rating:" + i);
@@ -131,8 +142,14 @@ class Home extends Component {
   }
 
   deleteMovie(movieId) {
+    this.setState({
+      deletingMovieId: movieId
+    });
     deleteMovieAPI(movieId, (error, response) => {
       if (error) {
+        this.setState({
+          deletingMovieId: ''
+        });
         alert('Could not delete the movie! Please try again.');
       } else if (response) {
         if (response.status === 204) {
@@ -150,7 +167,8 @@ class Home extends Component {
 
     this.setState({
       movies: newMovies,
-      resultsCount: this.state.resultsCount - 1
+      resultsCount: this.state.resultsCount - 1,
+      deletingMovieId: ''
     });
   }
 
@@ -178,6 +196,7 @@ class Home extends Component {
                   hitsPerPage: this.state.hitsPerPage,
                 }}
                 movies={this.state.movies}
+                deletingMovieId={this.state.deletingMovieId}
                 deleteMovieCallback={(movieId) => this.deleteMovie(movieId)} />
               <Pagination
                 currentPage={this.state.pageNumber}

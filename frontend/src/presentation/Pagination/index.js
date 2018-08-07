@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import ClassNames from 'classnames';
 
+import './style.css';
+
 class Pagination extends Component {
   onPageNumberClick(pageNumber, e) {
     e.preventDefault();
@@ -76,7 +78,7 @@ class Pagination extends Component {
     }
 
     return (
-      <div className="field">
+      <div className="field pagination-field">
         <div className="control">
           <nav className="pagination is-centered is-rounded" aria-label="pagination">
             <a

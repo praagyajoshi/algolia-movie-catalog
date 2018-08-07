@@ -2,11 +2,14 @@
 
 .facet-tag {
   color: $text-colour;
-  padding: 0.75rem 0;
-  margin-right: 0.75rem;
+  padding: 0.75rem;
   display: flex;
   justify-content: space-between;
   border-bottom: 1px solid $border-colour-transparent;
+
+  &:hover {
+    background-color: $hover-background-colour;
+  }
 
   .star-rating {
     color: $golden-colour;

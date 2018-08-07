@@ -1,9 +1,16 @@
 @import 'styles/_colours.scss';
+@import 'bulma/sass/utilities/_all';
 
 .search-box-field {
+
+  @include from($tablet) {
+    padding: 0 0.75rem;
+  }
+
   .control {
     .input, .icon {
       min-height: 54px;
     }
   }
+
 }

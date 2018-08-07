@@ -1,10 +1,17 @@
 @import 'styles/_colours.scss';
+@import 'bulma/sass/utilities/_all';
 
 .movie-list {
-  padding: 0;
+  padding: 0.75rem;
   box-shadow: none;
-  padding-bottom: 0.75rem;
-  margin-bottom: 0.75rem;
+
+  @include mobile {
+    margin: 0 -0.75rem;
+  }
+
+  &:hover {
+    background-color: $hover-background-colour;
+  }
 
   &:not(:last-of-type) {
     border-bottom: solid 1px $border-colour;
@@ -62,6 +69,10 @@
     -webkit-transition: opacity 0.25s ease-in-out;
     -moz-transition: opacity 0.25s ease-in-out;
     transition: opacity 0.25s ease-in-out;
+
+    &.is-loading {
+      opacity: 1;
+    }
   }
 
   &:hover {

@@ -1,7 +1,12 @@
 @import 'styles/_colours.scss';
+@import 'bulma/sass/utilities/_all';
 
 .movie-results {
   .search-results-counters {
     margin-bottom: 0.75rem;
+
+    @include from($tablet) {
+      padding: 0 0.75rem;
+    }
   }
 }

@@ -1,0 +1,7 @@
+@import 'bulma/sass/utilities/_all';
+
+.field.pagination-field {
+  @include from($tablet) {
+    padding: 0 0.75rem;
+  }
+}

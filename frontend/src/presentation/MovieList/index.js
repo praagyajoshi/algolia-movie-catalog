@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import ClassNames from 'classnames';
 
 import './style.css';
 
@@ -51,7 +52,14 @@ class MovieList extends Component {
   }
 
   render() {
-    const movie = this.props.movie;
+    const { movie, isDeleting } = this.props;
+    const deleteButtonClasses = ClassNames({
+      'button' : true,
+      'delete-button' : true,
+      'is-danger' : true,
+      'is-outlined' : true,
+      'is-loading' : isDeleting
+    });
 
     return (
       <div className="movie-list">
@@ -88,7 +96,7 @@ class MovieList extends Component {
 
               <div>
                 <a
-                  className="button delete-button is-danger is-outlined"
+                  className={deleteButtonClasses}
                   aria-label="delete"
                   onClick={(e) => this.onDeleteClick(e)}>
                   Delete
@@ -105,7 +113,8 @@ class MovieList extends Component {
 
 MovieList.propTypes = {
   movie: PropTypes.object.isRequired,
-  deleteMovieCallback: PropTypes.func.isRequired
+  deleteMovieCallback: PropTypes.func.isRequired,
+  isDeleting: PropTypes.bool.isRequired
 }
 
 export default MovieList;

@@ -13,9 +13,9 @@ class FacetTagGroup extends Component {
     return (
       <div className="field facet-field">
         <div className="header">
-          <h4 className="title is-4">
+          <h5 className="title is-5">
             {this.props.groupName}
-          </h4>
+          </h5>
           <a
             className="button is-white is-small reset-filter-button"
             onClick={(e) => this.onResetClick(e)} >

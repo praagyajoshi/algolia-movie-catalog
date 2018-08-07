@@ -7,7 +7,6 @@ import NoResult from '../../presentation/NoResult';
 
 class MovieResults extends Component {
   getList() {
-    // TODO: handle no results state
     var movies = this.props.movies;
 
     if (movies.length) {
@@ -28,10 +27,12 @@ class MovieResults extends Component {
   }
 
   getMovieList(movie) {
+    const isDeleting = (movie._id.$oid === this.props.deletingMovieId);
     return (
       <MovieList
         key={movie._id.$oid}
         movie={movie}
+        isDeleting={isDeleting}
         deleteMovieCallback={(movieId) => this.deleteMovieClicked(movieId)} />
     );
   }
@@ -54,7 +55,8 @@ class MovieResults extends Component {
 MovieResults.propTypes = {
   movies: PropTypes.array.isRequired,
   counters: PropTypes.object.isRequired,
-  deleteMovieCallback: PropTypes.func.isRequired
+  deleteMovieCallback: PropTypes.func.isRequired,
+  deletingMovieId: PropTypes.string
 }
 
 export default MovieResults;

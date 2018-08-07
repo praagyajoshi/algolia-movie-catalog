@@ -15,7 +15,7 @@ class SearchResults extends Component {
     }
 
     return (
-      <div className="search-results-counters">
+      <div>
         Showing <strong>{startNumber} to {endNumber}</strong> out of {resultsCount}
       </div>
     );
@@ -25,10 +25,10 @@ class SearchResults extends Component {
     return (
       <div className="field">
         <div className="control movie-results">
-          <div>
+          <div className="search-results-counters">
             {this.props.showCounters && this.getCounters()}
           </div>
-          <div>
+          <div className="search-results-movie-list">
             {this.props.children}
           </div>
         </div>
