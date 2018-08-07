@@ -10,6 +10,9 @@ module Api::V1
 
     # DELETE /movies/:id
     def destroy
+      # Deleting the uploaded image from our filesystem
+      # before the object is destroyed
+      @movie.remove_uploaded_image
       @movie.destroy
       head :no_content
     end
