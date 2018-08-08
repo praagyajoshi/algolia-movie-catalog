@@ -94,8 +94,8 @@ class Facets extends Component {
 
     /**
      * Adding up the facet counts for ratings so that we can display
-     * the correct counts, as we want to filter on "3 starts and above"
-     * instead of "3 stars".
+     * the correct counts, as we want to filter on "3 stars and above"
+     * instead of just "3 stars".
      */
     for (let i = 5; i >= 1; i--) {
       if (currentRatingFacet.hasOwnProperty(i) && currentRatingFacet[i]) {

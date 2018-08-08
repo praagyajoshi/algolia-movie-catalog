@@ -15,7 +15,7 @@ class Header extends Component {
                   <h3 className="title is-3">
                     <i className="fas fa-film"></i>
                     &nbsp;
-                    Movie Laundry
+                    Algolia Movie Catalog
                   </h3>
                 </a>
               </div>

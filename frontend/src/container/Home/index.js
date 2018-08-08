@@ -42,7 +42,7 @@ class Home extends Component {
   componentWillReceiveProps(nextProps) {
     const { rating, genre, page, q } = nextProps;
 
-    this.buildSearchFilters(
+    this.buildFiltersAndSearch(
       rating,
       genre,
       page && page > 0 ? page : 1,
@@ -57,7 +57,7 @@ class Home extends Component {
      * Build facet filters based on the URL, and fetch movies
      * from the search provider on initial page load.
      */
-    this.buildSearchFilters(
+    this.buildFiltersAndSearch(
       rating,
       genre,
       page && page > 0 ? page : 1,
@@ -65,7 +65,7 @@ class Home extends Component {
     );
   }
 
-  buildSearchFilters(rating, genre, page, q) {
+  buildFiltersAndSearch(rating, genre, page, q) {
     let filters = [];
     let ratingFilters = [];
 

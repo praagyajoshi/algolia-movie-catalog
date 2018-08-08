@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { hot } from 'react-hot-loader';
+import Helmet from 'react-helmet';
 
 import history from './utils/history';
 import Home from './container/Home';
@@ -13,8 +14,21 @@ class App extends Component {
   }
 
   render() {
+    const siteTitle = 'Algolia Movie Catalog - Praagya';
+    const siteDescription = 'Movie management made easy';
+
     return (
-      <Home />
+      <div className="app-container">
+        <Helmet
+          title={siteTitle}
+          meta={[
+            { name: 'description', content: 'siteDescription' },
+            { property: 'og:title', content: siteTitle },
+            { property: 'og:description', content: siteDescription },
+          ]}
+        />
+        <Home />
+      </div>
     );
   }
 }
