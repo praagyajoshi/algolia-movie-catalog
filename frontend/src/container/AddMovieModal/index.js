@@ -63,7 +63,7 @@ class AddMovieModal extends Component {
         this.setState({
           isProcessing: false
         }, () => {
-          alert('Something went wrong! Please try again.');
+          alert(`Oops, could not add the movie!\nError: ${error.message}.`);
         });
       } else if (response) {
         if (response.status === 201) {

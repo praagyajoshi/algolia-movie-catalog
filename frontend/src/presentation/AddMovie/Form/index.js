@@ -207,7 +207,6 @@ class AddMovieForm extends Component {
               type="number"
               required
               min="1906"
-              max="2018"
               placeholder="1996" />
             <p className="help is-danger"></p>
           </div>
