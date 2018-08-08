@@ -32,8 +32,19 @@ class Movie
       self.uploaded_image.url
     end
 
-    # Defining attributes which will be searchabhe
+    # Defining which attributes will be searchable
     searchableAttributes ['title', 'actors', 'alternative_titles', 'year']
+
+    # Defining facets
+    attributesForFaceting [:genre, :rating]
+
+    # Defining highlights
+    attributesToHighlight [:title, :actors]
+    highlightPreTag '<span class="highlight">'
+    highlightPostTag '</span>'
+
+    # Skip out on reireiving these attributes
+    unretrievableAttributes [:alternative_titles]
 
     # Ranking search results based on score
     customRanking ['desc(score)']
