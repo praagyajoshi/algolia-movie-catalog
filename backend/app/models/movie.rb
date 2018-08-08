@@ -32,7 +32,7 @@ class Movie
   mount_uploader :uploaded_image, ImageUploader
 
   # Search specific configurations
-  algoliasearch do
+  algoliasearch index_name: ENV['ALGOLIA_INDEX_NAME'] do
     # Set complete URL for the uploaded image
     add_attribute :uploaded_image do
       self.uploaded_image.url

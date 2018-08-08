@@ -7,7 +7,9 @@ const searchClient = algoliaSearch(
   process.env.REACT_APP_ALGOLIA_APPLICATION_ID,
   process.env.REACT_APP_ALGOLIA_API_KEY
 );
-const searchIndex = searchClient.initIndex('Movie');
+const searchIndex = searchClient.initIndex(
+  process.env.REACT_APP_ALGOLIA_INDEX_NAME
+);
 
 /**
  * Searches for movies using the Algolia seach client.
