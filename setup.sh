@@ -104,7 +104,7 @@ done
 printf "\n"
 
 # Use mongoimport to import the initial data set
-print_text "Creating the DB schema:\n" "info"
+print_text "Importing initial data set:\n" "info"
 docker exec -it praagya-algolia-mongo bash -c 'mongoimport --username root --password algolia --authenticationDatabase admin --db backend_development --collection movies --file seed_data/movies.json --jsonArray'
 print_text "\nOK\n" "success"
 
