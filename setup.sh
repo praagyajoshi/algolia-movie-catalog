@@ -33,7 +33,7 @@ exit_with_error () {
   exit 1
 }
 
-print_text "Welcome to the Algolia assignment setup!\n" "success"
+print_text "Welcome to the Algolia Movie Catalog setup!\n" "success"
 printf "\n"
 
 printf "\e[96m"
