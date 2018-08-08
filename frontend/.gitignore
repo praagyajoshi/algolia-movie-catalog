@@ -9,7 +9,10 @@
 # production
 /build
 
-# css files (as we're using sass/scss)
+# dotenv
+.env
+
+# css files (as we're using sass/scss which builds it's own css files)
 src/**/*.css
 
 # misc
