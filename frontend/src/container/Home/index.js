@@ -109,7 +109,7 @@ class Home extends Component {
       this.state.facetFilters,
       (error, content) => {
         if (error) {
-          alert('Oops, something went wrong! Please try again.');
+          alert(`Oops, could not search!\nError: ${error.message}.`);
           return;
         }
 
@@ -160,7 +160,7 @@ class Home extends Component {
         this.setState({
           deletingMovieId: ''
         });
-        alert('Could not delete the movie! Please try again.');
+        alert(`Could not delete the movie!\nError: ${error.message}.\nPlease try again.`);
       } else if (response) {
         if (response.status === 204) {
           this.removeMovieFromLocalData(movieId);
