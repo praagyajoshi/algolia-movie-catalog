@@ -47,7 +47,7 @@ This created an application without on all the view logic of Rails, and instead 
 ### Testing
 
 `RSpec` is used for testing the application, utilising Test Driven Development (`TDD`) and Behaviour Driven Development (`BDD`).  
-`RSpec` allows us to write verbose tests which describe their behaviour with more clarity.  
+`RSpec` allows us to write verbose tests which describe their behaviour with more clarity.
 
 Two kinds are tests have been written for this application:
 - Specs for the model  
@@ -55,6 +55,8 @@ Two kinds are tests have been written for this application:
 - Specs for the API requests  
   Instead of testing the controller directly, we rely on Request specs to do an integration test of the whole stack, including the routing. It is also the [official recommendation](http://rspec.info/blog/2016/07/rspec-3-5-has-been-released/) of the Rails and RSpec teams.  
   They are located at `/backend/spec/requests`.
+
+The Request specs are run against a test database as defined in `/backend/config/mongoid.yml`. There's no need to explicitly create this database as `MongoDB` creates databases on demand.
 
 ### API endpoints
 
@@ -190,3 +192,13 @@ Since we're dealing with movies which are completely independent of each other, 
 It brings in a lot of performance benefits & scalability when dealing with large volumes of data, and also has good interoperability with our backend of choice - `Ruby on Rails`.
 
 The initial dataset is present in `/mongo/seed_data/movies.json`, and is mounted to the `mongo` container by `Docker`. It is then imported by the `./setup.sh` script using the `mongoimport` tool.
+
+## Improvements
+
+Before this application is ready for production, a few improvements are desireable:
+- **Authentication**  
+  It's necessary for most applications dealing with data to be behind a layer of authentication.  
+  **Json Web Tokens (JWT)** can be used as an implementation of authentication. It allows the server to remain completely stateless - unlike other authentication methods, there's no need to store user sessions in any form on the server. Since it relies on a single key for encryption and decryption of tokens, the authentication remains fast and lightweight regardless of the number of users logged in.
+- **Frontend improvements**  
+  The size of each movie row can be reduced to fit more movies on the page. This will improve the overall UX of the application.  
+  In addition, stateless components should extend `React.PureComponent`.
