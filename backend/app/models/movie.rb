@@ -18,16 +18,22 @@ class Movie
 
   # Validations
   validates_presence_of :title, :year, :genre, :rating
+  validates :year, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 1906
+  }
+  validates :rating, numericality: {
+    only_integer: true,
+    greater_than_or_equal_to: 1,
+    less_than_or_equal_to: 5
+  }
 
-  # Image uploader
+  # Attach the image uploader
   mount_uploader :uploaded_image, ImageUploader
 
   # Search specific configurations
   algoliasearch do
-    # send all attributes
-    # attribute :title, :alternative_titles, :year, :score, :rating, :actors, :genre
-
-    # send complete URL for the image
+    # Set complete URL for the uploaded image
     add_attribute :uploaded_image do
       self.uploaded_image.url
     end

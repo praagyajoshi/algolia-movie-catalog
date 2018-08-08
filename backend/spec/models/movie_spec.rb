@@ -10,4 +10,8 @@ RSpec.describe Movie, type: :model do
   it { is_expected.to validate_presence_of(:year) }
   it { is_expected.to validate_presence_of(:genre) }
   it { is_expected.to validate_presence_of(:rating) }
+
+  # Ensure rating validations are present
+  it { is_expected.to validate_numericality_of(:year) }
+  it { is_expected.to validate_numericality_of(:rating) }
 end
