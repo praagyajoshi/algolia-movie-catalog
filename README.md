@@ -200,8 +200,9 @@ Before this application is ready for production, a few improvements are desireab
   It's necessary for most applications dealing with data to be behind a layer of authentication.  
   One possible technique would be using **Json Web Tokens (JWT)**. It allows the server to remain completely stateless - unlike other authentication methods, there's no need to store user sessions in any form on the server. Since it relies on a single key for encryption and decryption of tokens, the authentication remains fast and lightweight regardless of the number of users logged in.
 - **Frontend improvements**  
-  The size of each movie row can be reduced to fit more movies on the page. This will improve the overall UX of the application.  
-  In addition, stateless components should extend `React.PureComponent`.
+  Tests should be introduced for the frontend application as well, possibly using `JestJS`. In addition, stateless components should extend `React.PureComponent`, instead of `React.Component`.
+- **Frontend UI improvements**  
+  The size of each movie row can be reduced to fit more movies on the page. This will improve the overall UX of the application.
 
 ---
 
