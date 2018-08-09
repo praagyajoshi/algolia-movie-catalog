@@ -6,7 +6,13 @@
     margin-bottom: 0.75rem;
 
     @include from($tablet) {
-      padding: 0 0.75rem;
+      padding-left: 0.75rem;
+    }
+  }
+
+  .search-results-movie-list.columns {
+    @include from($tablet) {
+      padding-left: 0.75rem;
     }
   }
 }

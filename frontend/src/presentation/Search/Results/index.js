@@ -28,7 +28,7 @@ class SearchResults extends Component {
           <div className="search-results-counters">
             {this.props.showCounters && this.getCounters()}
           </div>
-          <div className="search-results-movie-list">
+          <div className="search-results-movie-list columns is-multiline">
             {this.props.children}
           </div>
         </div>

@@ -4,9 +4,9 @@
 .section.two-column-layout {
   padding-bottom: 0;
 
-  .container {
+  > .container {
 
-    .columns {
+    > .columns {
       padding: 1.25rem;
       background-color: #FFFFFF;
       border-radius: 6px;
@@ -15,7 +15,7 @@
       transform: translateY(-70px);
       align-items: flex-start;
 
-      .column {
+      > .column {
         padding-top: 0;
         margin-top: 0.75rem;
 
