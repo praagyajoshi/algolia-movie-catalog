@@ -47,16 +47,21 @@ class Facets extends Component {
   handleRatingFacetToggle(value) {
     const { rating, onChangeRating } = this.props;
     const ratingInteger = parseInt(value, 10);
+    let newRating = ratingInteger;
 
     if (rating === ratingInteger) {
       /**
        * If the same rating was clicked again, then we need
        * to remove it as the rating filter.
        */
-      onChangeRating(null);
-    } else {
-      onChangeRating(ratingInteger);
+      newRating = null;
     }
+
+    // Unsetting the page number when changing the rating
+    this.props.onChangeUrlQueryParams({
+      rating: newRating,
+      page: null
+    });
   }
 
   handleGenreFacetToggle(value) {
@@ -80,7 +85,11 @@ class Facets extends Component {
       newGenre = newGenre.concat(lowercaseValue);
     }
 
-    onChangeGenre(newGenre);
+    // Unsetting the page number when changing the genre
+    this.props.onChangeUrlQueryParams({
+      genre: newGenre,
+      page: null
+    });
   }
 
   getFacetGroups() {
