@@ -173,8 +173,6 @@ Facets.propTypes = {
   facets: PropTypes.object.isRequired,
   genre: PropTypes.array,
   rating: PropTypes.number,
-  onChangeGenre: PropTypes.func,
-  onChangeRating: PropTypes.func,
   onChangeUrlQueryParams: PropTypes.func
 }
 
