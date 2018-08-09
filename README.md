@@ -202,7 +202,8 @@ Before this application is ready for production, a few improvements are desireab
 - **Frontend improvements**  
   Tests should be introduced for the frontend application as well, possibly using `JestJS`. In addition, stateless components should extend `React.PureComponent`, instead of `React.Component`.
 - **Frontend UI improvements**  
-  The size of each movie row can be reduced to fit more movies on the page. This will improve the overall UX of the application.
+  ~~The size of each movie row can be reduced to fit more movies on the page. This will improve the overall UX of the application.~~  
+  Fixed in [Pull Request #1](https://github.com/praagyajoshi/algolia-movie-catalog/pull/1).
 
 ---
 
