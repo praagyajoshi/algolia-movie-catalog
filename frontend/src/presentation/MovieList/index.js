@@ -49,12 +49,12 @@ class MovieList extends Component {
       actorsArray = actors.map((actor) => { return actor.value });
     }
 
-    // Not showing more than 5 actors at a time
-    if (actorsArray.length > 5) {
-      const remainingCount = actorsArray.length - 5;
+    // Not showing more than 4 actors at a time
+    if (actorsArray.length > 4) {
+      const remainingCount = actorsArray.length - 4;
       remainingPostfix = ' and ' + remainingCount;
       remainingPostfix += remainingCount > 1 ? ' others' : ' other';
-      actorsArray = actorsArray.slice(0, 5);
+      actorsArray = actorsArray.slice(0, 4);
     }
 
     actorsHtml = actorsArray.join(', ') + remainingPostfix;
@@ -101,7 +101,7 @@ class MovieList extends Component {
     });
 
     return (
-      <div className="movie-list">
+      <div className="movie-list column is-half">
         <article className="media">
 
           <div className="media-left">
